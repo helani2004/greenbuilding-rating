@@ -238,7 +238,19 @@ async function standards() {
     order: 'created_at.asc,id.asc',
   });
 }
-
+function isCompleteStandard(s) {
+  return (
+    Array.isArray(s.categories) &&
+    s.categories.length === 8 &&
+    s.categories.every(
+      c =>
+        c.implemented !== false &&
+        Array.isArray(c.credits) &&
+        c.credits.length > 0
+    ) &&
+    validateStandard(s).length === 0
+  );
+}
 const documentFor = row => ({
   ...row.document,
   id: row.id,
@@ -774,7 +786,7 @@ export default async function handler(req, res) {
     if (method === 'GET' && path === '/standards') {
       const available = (await standards())
         .map(documentFor)
-        .filter(s => s.status === 'published')
+        .filter(s => s.status === 'published' && isCompleteStandard(s))
         .map(({ categories, ...s }) => s);
 
       return json(res, 200, available);
@@ -797,7 +809,15 @@ export default async function handler(req, res) {
       if (s.status !== 'published') {
         fail('Choose a published version.');
       }
-
+      if (
+        s.status !== 'published' ||
+        !isCompleteStandard(s)
+      ) {
+        fail(
+          'Choose a complete eight-category version. Refresh the page and create the assessment again.'
+      );
+}
+      
       if (
         typeof b.name !== 'string' ||
         !b.name.trim() ||
