@@ -71,7 +71,21 @@ return <section><div className="title-row"><div><p className="eyebrow">ADMIN WOR
 </section>;
 }
 function ItemEditor({item,credit,edit,remove}:{item:D;credit:boolean;edit:(fn:(i:D)=>void)=>void;remove:()=>void}){
-return <details className="card editor-item"><summary>{item.title} {credit?`· ${item.maxPoints} points`:''}</summary><div className="admin-grid"><label>Title<input value={item.title} onChange={e=>edit(i=>{i.title=e.target.value;})}/></label>{credit&&<label>Maximum credit points<input type="number" min="0" step="any" value={item.maxPoints} onChange={e=>edit(i=>{i.maxPoints=Number(e.target.value);})}/></label>}</div><label>
+return <details className="card editor-item"><summary>{item.title} {credit?`· ${item.maxPoints} points`:''}</summary><div className="admin-grid"><label>Title<input value={item.title} onChange={e=>edit(i=>{i.title=e.target.value;})}/></label>{credit&&<label>Maximum credit points<input type="number" min="0" step="any" value={item.maxPoints} onChange={e=>edit(i=>{i.maxPoints = Number(e.target.value);
+i.selectablePoints = i.maxPoints > 1;})}/></label>}</div>{credit && item.maxPoints > 1 && (
+  <label className="checkbox">
+    <input
+      type="checkbox"
+      checked={!!item.selectablePoints}
+      onChange={e =>
+        edit(i => {
+          i.selectablePoints = e.target.checked;
+        })
+      }
+    />
+    Allow users to select points from 0 to {item.maxPoints}
+  </label>
+)}<label>
   Intent / objective
   <textarea
     value={item.intent || ''}
