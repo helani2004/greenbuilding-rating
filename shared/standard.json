@@ -1,0 +1,111 @@
+{
+  "id": "new-v3-beta-demo-1",
+  "buildingType": "new",
+  "label": "New Buildings \u00b7 v3.0 Beta \u00b7 demonstration rules",
+  "demo": true,
+  "source": "GREENSL New Construction v3.0 Beta, printed Management page 1. Titles and point allocations transcribed; Yes + evidence rules are demonstrations, not the complete standard.",
+  "categories": [
+    {
+      "id": "MN",
+      "title": "Management",
+      "maxPoints": 4,
+      "implemented": true,
+      "prerequisites": [
+        {
+          "id": "MN-P1",
+          "title": "Green Building Accredited Professional"
+        },
+        {
+          "id": "MN-P2",
+          "title": "Statutory and Local Authority Approvals"
+        },
+        {
+          "id": "MN-P3",
+          "title": "Building Performance & Operations Guide"
+        },
+        {
+          "id": "MN-P4",
+          "title": "Occupant Awareness & Knowledge Transfer"
+        }
+      ],
+      "credits": [
+        {
+          "id": "MN-C1",
+          "title": "Integrative Design Approach",
+          "maxPoints": 1
+        },
+        {
+          "id": "MN-C2",
+          "title": "Green Operations and Sustainability Leadership",
+          "maxPoints": 1
+        },
+        {
+          "id": "MN-C3",
+          "title": "Engagement of Qualified Sustainability and Ecological Expertise",
+          "maxPoints": 1
+        },
+        {
+          "id": "MN-C4",
+          "title": "Construction Sustainability Management Plan",
+          "maxPoints": 1
+        }
+      ]
+    },
+    {
+      "id": "SS",
+      "title": "Sustainable Sites",
+      "maxPoints": 25,
+      "implemented": false,
+      "prerequisites": [],
+      "credits": []
+    },
+    {
+      "id": "WE",
+      "title": "Water Efficiency",
+      "maxPoints": 14,
+      "implemented": false,
+      "prerequisites": [],
+      "credits": []
+    },
+    {
+      "id": "EA",
+      "title": "Energy & Atmosphere",
+      "maxPoints": 22,
+      "implemented": false,
+      "prerequisites": [],
+      "credits": []
+    },
+    {
+      "id": "MR",
+      "title": "Materials, Resources & Waste Management",
+      "maxPoints": 13,
+      "implemented": false,
+      "prerequisites": [],
+      "credits": []
+    },
+    {
+      "id": "EQ",
+      "title": "Indoor Environmental Quality",
+      "maxPoints": 14,
+      "implemented": false,
+      "prerequisites": [],
+      "credits": []
+    },
+    {
+      "id": "ID",
+      "title": "Innovation & Design Process",
+      "maxPoints": 4,
+      "implemented": false,
+      "prerequisites": [],
+      "credits": []
+    },
+    {
+      "id": "SC",
+      "title": "Social & Cultural Awareness",
+      "maxPoints": 4,
+      "implemented": false,
+      "prerequisites": [],
+      "credits": []
+    }
+  ]
+}

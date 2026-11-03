@@ -1,0 +1,3927 @@
+[
+  {
+    "id": "new-v3-beta-demo-1",
+    "buildingType": "new",
+    "label": "New Buildings \u00b7 v3.0 Beta \u00b7 demonstration rules",
+    "demo": true,
+    "source": "GREENSL New Construction v3.0 Beta, printed Management page 1. Titles and point allocations transcribed; Yes + evidence rules are demonstrations, not the complete standard.",
+    "categories": [
+      {
+        "id": "MN",
+        "title": "Management",
+        "maxPoints": 4,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "MN-P1",
+            "title": "Green Building Accredited Professional",
+            "help": "Upload the Green AccP appointment letter, accreditation evidence and verified logbook showing sustainability input from design through construction. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-P2",
+            "title": "Statutory and Local Authority Approvals",
+            "help": "Upload applicable planning/building permits and statutory approvals, with an approvals register indicating the issuing authority and status. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-P3",
+            "title": "Building Performance & Operations Guide",
+            "help": "Upload the building performance and operations guide, covering system operation, maintenance and occupant/user instructions. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-P4",
+            "title": "Occupant Awareness & Knowledge Transfer",
+            "help": "Upload the occupant awareness/training plan, training materials, attendance records and evidence of the handover or knowledge-transfer sessions. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "MN-C1",
+            "title": "Integrative Design Approach",
+            "maxPoints": 1,
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-C2",
+            "title": "Green Operations and Sustainability Leadership",
+            "maxPoints": 1,
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-C3",
+            "title": "Engagement of Qualified Sustainability and Ecological Expertise",
+            "maxPoints": 1,
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-C4",
+            "title": "Construction Sustainability Management Plan",
+            "maxPoints": 1,
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested guidance; this legacy project retains its original demonstration scoring.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "id": "SS",
+        "title": "Sustainable Sites",
+        "maxPoints": 25,
+        "implemented": false,
+        "prerequisites": [],
+        "credits": []
+      },
+      {
+        "id": "WE",
+        "title": "Water Efficiency",
+        "maxPoints": 14,
+        "implemented": false,
+        "prerequisites": [],
+        "credits": []
+      },
+      {
+        "id": "EA",
+        "title": "Energy & Atmosphere",
+        "maxPoints": 22,
+        "implemented": false,
+        "prerequisites": [],
+        "credits": []
+      },
+      {
+        "id": "MR",
+        "title": "Materials, Resources & Waste Management",
+        "maxPoints": 13,
+        "implemented": false,
+        "prerequisites": [],
+        "credits": []
+      },
+      {
+        "id": "EQ",
+        "title": "Indoor Environmental Quality",
+        "maxPoints": 14,
+        "implemented": false,
+        "prerequisites": [],
+        "credits": []
+      },
+      {
+        "id": "ID",
+        "title": "Innovation & Design Process",
+        "maxPoints": 4,
+        "implemented": false,
+        "prerequisites": [],
+        "credits": []
+      },
+      {
+        "id": "SC",
+        "title": "Social & Cultural Awareness",
+        "maxPoints": 4,
+        "implemented": false,
+        "prerequisites": [],
+        "credits": []
+      }
+    ],
+    "status": "published",
+    "revision": 1
+  },
+  {
+    "id": "new-demo-2",
+    "buildingType": "new",
+    "label": "New Buildings \u00b7 v3.0 Beta \u00b7 workflow demonstration",
+    "demo": true,
+    "status": "published",
+    "revision": 1,
+    "source": "Supplied GREENSL New Construction v3.0 Beta. EQ uses detailed chapter pp. 113\u2013114 because the main checklist differs. SC heritage prerequisite uses detailed chapter, not duplicated innovation label in checklist.",
+    "categories": [
+      {
+        "id": "MN",
+        "title": "Management",
+        "maxPoints": 4,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "MN-P1",
+            "title": "Green Building Accredited Professional",
+            "help": "Upload the Green AccP appointment letter, accreditation evidence and verified logbook showing sustainability input from design through construction. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-P2",
+            "title": "Statutory and Local Authority Approvals",
+            "help": "Upload applicable planning/building permits and statutory approvals, with an approvals register indicating the issuing authority and status. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-P3",
+            "title": "Building Performance & Operations Guide",
+            "help": "Upload the building performance and operations guide, covering system operation, maintenance and occupant/user instructions. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MN-P4",
+            "title": "Occupant Awareness & Knowledge Transfer",
+            "help": "Upload the occupant awareness/training plan, training materials, attendance records and evidence of the handover or knowledge-transfer sessions. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "MN-C1",
+            "title": "1.1 Integrative Design Approach",
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "MN-C2",
+            "title": "1.2 Green Operations and Sustainability Leadership",
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "MN-C3",
+            "title": "1.3.1 Engagement of Qualified Sustainability and Ecological Expertise",
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "MN-C4",
+            "title": "1.3.2 Construction Sustainability Management Plan",
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "SS",
+        "title": "Sustainable Sites",
+        "maxPoints": 25,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "SS-P1",
+            "title": "Erosion and Sedimentation Control",
+            "help": "Upload the erosion and sedimentation control plan, site drawings showing control measures, and implementation/inspection records or dated photographs. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "SS-C1",
+            "title": "2.1.1 Appropriate & Climate-Resilient Site Selection",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 3
+          },
+          {
+            "id": "SS-C2",
+            "title": "2.1.2 Previously Developed Site",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C3",
+            "title": "2.2 Site Assessment & Climate Risk Analysis",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C4",
+            "title": "2.3.1 Development Density",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C5",
+            "title": "2.3.2 Community Connectivity",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C6",
+            "title": "2.4.1 Public Transportation Accessibility",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C7",
+            "title": "2.4.2 Parking Capacity",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C8",
+            "title": "2.4.3 Low-Carbon Mobility & Transportation Demand Management",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 3
+          },
+          {
+            "id": "SS-C9",
+            "title": "2.5.1 Site Conservation",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C10",
+            "title": "2.5.2 Development Footprint",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C11",
+            "title": "2.6.1 Ecological Enhancement",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C12",
+            "title": "2.6.2 Ecology Management & Monitoring",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C13",
+            "title": "2.7.1 Stormwater Quantity Management",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C14",
+            "title": "2.7.2 Stormwater Quality & Nature-Based Solutions",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C15",
+            "title": "2.7.3 Flood Resilience & Climate Adaptation",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C16",
+            "title": "2.8 Heat Island Reduction, Non-Roof",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C17",
+            "title": "2.9 Climate-Responsive Roof Design",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C18",
+            "title": "2.10 Responsible Exterior Lighting",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "WE",
+        "title": "Water Efficiency",
+        "maxPoints": 14,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "WE-P1",
+            "title": "Water Stewardship Strategy",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "WE-P2",
+            "title": "Minimum Water Efficiency",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "WE-P3",
+            "title": "Building Water Metering",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "WE-C1",
+            "title": "3.1 Construction Water Management",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "WE-C2",
+            "title": "3.2.1 Indoor Fixture and Fitting Efficiency",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 4
+          },
+          {
+            "id": "WE-C3",
+            "title": "3.2.2 Appliance and Process Water Efficiency",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "WE-C4",
+            "title": "3.2.3 Outdoor Water Use Efficiency",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "WE-C5",
+            "title": "3.3 Circular Water Management",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 3
+          },
+          {
+            "id": "WE-C6",
+            "title": "3.4 Water Security & Climate Resilience",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "WE-C7",
+            "title": "3.5 Water Sub-Metering & Monitoring",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "EA",
+        "title": "Energy & Atmosphere",
+        "maxPoints": 22,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "EA-P1",
+            "title": "Fundamental Building Systems Commissioning and Verification",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "EA-P2",
+            "title": "Minimum Energy Performance",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "EA-P3",
+            "title": "Fundamental Refrigerant Management",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "EA-P4",
+            "title": "Energy & Operational Carbon Monitoring and Reporting",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "EA-C1",
+            "title": "4.1 Enhanced Energy Performance",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 10
+          },
+          {
+            "id": "EA-C2",
+            "title": "4.2 Renewable Energy Integration",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 5
+          },
+          {
+            "id": "EA-C3",
+            "title": "4.3 Resilient Energy Systems",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "EA-C4",
+            "title": "4.4 Enhanced Commissioning & Performance Verification",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "EA-C5",
+            "title": "4.5 Enhanced Refrigerant Management",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EA-C6",
+            "title": "4.6 Energy Monitoring & Continuous Improvement",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EA-C7",
+            "title": "4.7 Decarbonisation Plan",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "MR",
+        "title": "Materials, Resources & Waste Management",
+        "maxPoints": 13,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "MR-P1",
+            "title": "Product Stage Global Warming Potential (GWP) Assessment",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MR-P2",
+            "title": "Operational Waste Management",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "MR-C1",
+            "title": "5.1.1 Whole Building Life Carbon Assessment",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 4
+          },
+          {
+            "id": "MR-C2",
+            "title": "5.1.2 Building Reuse and Material Circularity Assessment",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 4
+          },
+          {
+            "id": "MR-C3",
+            "title": "5.1.3 Responsible & Low-Impact Materials",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 3
+          },
+          {
+            "id": "MR-C4",
+            "title": "5.2.1 Construction Waste Management",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "MR-C5",
+            "title": "5.2.2 Hazardous & Special Waste Management",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "EQ",
+        "title": "Indoor Environmental Quality",
+        "maxPoints": 14,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "EQ-P1",
+            "title": "Minimum Indoor Air Quality Performance",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "EQ-P2",
+            "title": "Environmental Tobacco Smoke Control",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "EQ-C1",
+            "title": "6.1 Indoor Air Quality Performance & Monitoring",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C2",
+            "title": "6.2 Increased Ventilation",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C3",
+            "title": "6.3 Construction & Pre-Occupancy Indoor Air Quality Management",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C4",
+            "title": "6.4 Low-Emitting Materials",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "EQ-C5",
+            "title": "6.5 Indoor Pollutant & Moisture Control",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C6",
+            "title": "6.6.1 Lighting Controls",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C7",
+            "title": "6.6.2 Comfort Controls",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C8",
+            "title": "6.7 Thermal Comfort",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C9",
+            "title": "6.8.1 Daylight",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C10",
+            "title": "6.8.2 Quality Views",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C11",
+            "title": "6.9 Minimum Acoustic Performance",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C12",
+            "title": "6.10 Nature & Sensory Connection",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C13",
+            "title": "6.11 IEQ Performance Verification",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "ID",
+        "title": "Innovation & Design Process",
+        "maxPoints": 4,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "ID-P1",
+            "title": "Innovation & Green Finance Taxonomy Readiness",
+            "help": "Provide a written innovation proposal, measurable benefits, supporting calculations and evidence of performance beyond the baseline requirements. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "ID-C1",
+            "title": "7.1 Innovation, Leadership & Exemplary Performance",
+            "help": "Provide a written innovation proposal, measurable benefits, supporting calculations and evidence of performance beyond the baseline requirements. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 4
+          }
+        ]
+      },
+      {
+        "id": "SC",
+        "title": "Social & Cultural Awareness",
+        "maxPoints": 4,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "SC-P1",
+            "title": "Cultural Heritage & Archaeological Protection",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "SC-P2",
+            "title": "Health, Safety & Wellbeing",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "SC-C1",
+            "title": "8.1 Universal Accessibility & Inclusive Design",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SC-C2",
+            "title": "8.2 Local Architectural Character & Cultural Identity",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SC-C3",
+            "title": "8.3 Occupant Social & Economic Wellbeing",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SC-C4",
+            "title": "8.4 Local Economic Contribution & Inclusive Communities",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "existing-demo-2",
+    "buildingType": "existing",
+    "label": "Existing Buildings \u00b7 v1.0 \u00b7 workflow demonstration",
+    "demo": true,
+    "status": "published",
+    "revision": 1,
+    "source": "Supplied GREENSL Existing Buildings v1.0 checklist. Shared category labels retained; credit allocations are specific to Existing Buildings.",
+    "categories": [
+      {
+        "id": "MN",
+        "title": "Management",
+        "maxPoints": 4,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "MN-P1",
+            "title": "Green Building Accredited Professional",
+            "help": "Upload the Green AccP appointment letter, accreditation evidence and verified logbook showing sustainability input from design through construction. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "MN-C1",
+            "title": "1.1 Building Users Guide",
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "MN-C2",
+            "title": "1.2 Environmental Management",
+            "help": "Provide the signed appointment/approval documents, relevant professional credentials, project records and reports supporting this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          }
+        ]
+      },
+      {
+        "id": "SS",
+        "title": "Sustainable Sites",
+        "maxPoints": 21,
+        "implemented": true,
+        "prerequisites": [],
+        "credits": [
+          {
+            "id": "SS-C1",
+            "title": "2.1 GREENSL Rated Design and Construction",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 4
+          },
+          {
+            "id": "SS-C2",
+            "title": "2.2 Building Exterior and Hardscape Management",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C3",
+            "title": "2.3 Outdoor Integrated Pest, Erosion and Landscape Management",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C4",
+            "title": "2.4.1 Low-Emitting and Fuel Efficient Vehicles",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C5",
+            "title": "2.4.2 Parking Capacity",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C6",
+            "title": "2.5 Protect or Restore Open Habitat",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "SS-C7",
+            "title": "2.6 Storm Water Quantity Control",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C8",
+            "title": "2.7 Storm Water Quality Control",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C9",
+            "title": "2.8 Heat Island Effect Non-Roof",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C10",
+            "title": "2.9 Heat Island Effect Roof",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SS-C11",
+            "title": "2.10 Light Pollution Reduction",
+            "help": "Provide site plans, relevant location maps, dated photographs, site/ecology assessments and supporting calculations for this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "WE",
+        "title": "Water Efficiency",
+        "maxPoints": 16,
+        "implemented": true,
+        "prerequisites": [],
+        "credits": [
+          {
+            "id": "WE-C1",
+            "title": "3.1.1 Total Water Consumption Measurement",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "WE-C2",
+            "title": "3.1.2 Building Subsystem Water Measurement",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "WE-C3",
+            "title": "3.2.1 Reduce Potable Landscaping Water",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "WE-C4",
+            "title": "3.2.2 Eliminate Potable Landscaping Water",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "WE-C5",
+            "title": "3.3 Air-conditioning Water Efficiency",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "WE-C6",
+            "title": "3.4.1 Reduce Potable Water or Treat Wastewater",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "WE-C7",
+            "title": "3.4.2 Harvested Rainwater",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "WE-C8",
+            "title": "3.5 Water Use Reduction",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 4
+          },
+          {
+            "id": "WE-C9",
+            "title": "3.6 Innovative Water Transmission",
+            "help": "Provide water consumption/baseline calculations, fixture specifications, meter records, water-system drawings and relevant management plans. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "EA",
+        "title": "Energy & Atmosphere",
+        "maxPoints": 26,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "EA-P1",
+            "title": "Minimum Energy Performance",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "EA-P2",
+            "title": "CFC Reduction in HVAC&R Equipment",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "EA-C1",
+            "title": "4.1 Optimise Energy Performance",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 10
+          },
+          {
+            "id": "EA-C2",
+            "title": "4.2 Renewable Energy",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 8
+          },
+          {
+            "id": "EA-C3",
+            "title": "4.3.1 Commissioning Investigation and Analysis",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EA-C4",
+            "title": "4.3.2 Commissioning Implementation",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EA-C5",
+            "title": "4.4 Ongoing Commissioning",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "EA-C6",
+            "title": "4.5 Ozone Depletion",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EA-C7",
+            "title": "4.6 Sub-Metering",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EA-C8",
+            "title": "4.7 Building Management System",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EA-C9",
+            "title": "4.8 Green Power",
+            "help": "Provide the energy assessment and baseline calculations, equipment/refrigerant schedules, commissioning reports, meter records or renewable-system specifications relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "MR",
+        "title": "Materials, Resources & Waste Management",
+        "maxPoints": 10,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "MR-P1",
+            "title": "Solid Waste Management Policy",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "MR-P2",
+            "title": "Sustainable Purchasing Policy",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "MR-C1",
+            "title": "5.1 Waste Stream Audit",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "MR-C2",
+            "title": "5.2 Waste: Ongoing Consumables",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "MR-C3",
+            "title": "5.3 Waste: Durable Goods",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "MR-C4",
+            "title": "5.4 Waste: Facility Alterations and Additions",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "MR-C5",
+            "title": "5.5 Purchasing: Ongoing Consumables",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "MR-C6",
+            "title": "5.6 Purchasing: Durable Goods",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "MR-C7",
+            "title": "5.7 Purchasing: Facility Alterations and Additions",
+            "help": "Provide the material inventory, EPDs or carbon calculations, purchasing records, waste-management plan and waste collection/diversion records relevant to this requirement. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "EQ",
+        "title": "Indoor Environmental Quality",
+        "maxPoints": 13,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "EQ-P1",
+            "title": "Minimum IAQ Performance",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          },
+          {
+            "id": "EQ-P2",
+            "title": "Smoke (ETS) Control",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "EQ-C1",
+            "title": "6.1 Outdoor Air Delivery Monitoring",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C2",
+            "title": "6.2 Increased Ventilation",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C3",
+            "title": "6.3 Low-Emitting Materials",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C4",
+            "title": "6.4 Green Cleaning Program",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "EQ-C5",
+            "title": "6.5 Indoor Integrated Pest Management",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C6",
+            "title": "6.6 Indoor Chemical & Pollutant Source Control",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C7",
+            "title": "6.7.1 Lighting Controls",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C8",
+            "title": "6.7.2 Comfort Controls",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C9",
+            "title": "6.8 Thermal Comfort Monitoring",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C10",
+            "title": "6.9 Occupancy Comfort Surveys",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C11",
+            "title": "6.10.1 Daylight",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          },
+          {
+            "id": "EQ-C12",
+            "title": "6.10.2 Views",
+            "help": "Provide ventilation or comfort calculations, drawings, product certificates/test reports, monitoring results and relevant occupant policies. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 1
+          }
+        ]
+      },
+      {
+        "id": "ID",
+        "title": "Innovation & Design Process",
+        "maxPoints": 6,
+        "implemented": true,
+        "prerequisites": [],
+        "credits": [
+          {
+            "id": "ID-C1",
+            "title": "7.1.1 Innovation in Design",
+            "help": "Provide a written innovation proposal, measurable benefits, supporting calculations and evidence of performance beyond the baseline requirements. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 3
+          },
+          {
+            "id": "ID-C2",
+            "title": "7.1.2 Exemplary Performance",
+            "help": "Provide a written innovation proposal, measurable benefits, supporting calculations and evidence of performance beyond the baseline requirements. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 3
+          }
+        ]
+      },
+      {
+        "id": "SC",
+        "title": "Social & Cultural Awareness",
+        "maxPoints": 4,
+        "implemented": true,
+        "prerequisites": [
+          {
+            "id": "SC-P1",
+            "title": "Archaeological Sites & Heritage Buildings",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            }
+          }
+        ],
+        "credits": [
+          {
+            "id": "SC-C1",
+            "title": "8.1 Social Wellbeing, Public Health & Safety",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          },
+          {
+            "id": "SC-C2",
+            "title": "8.2 Cultural Identity",
+            "help": "Provide accessibility/heritage drawings or approvals, health and safety plans, consultation records and evidence of community or local economic benefits. Suggested evidence guidance; verify the full standard and project applicability. A file upload alone does not verify compliance.",
+            "evidenceRequired": true,
+            "fields": [
+              {
+                "id": "answer",
+                "label": "Requirement met?",
+                "type": "yesno",
+                "required": true
+              }
+            ],
+            "rule": {
+              "type": "all",
+              "conditions": [
+                {
+                  "field": "answer",
+                  "operator": "eq",
+                  "value": "yes"
+                }
+              ]
+            },
+            "maxPoints": 2
+          }
+        ]
+      }
+    ]
+  }
+]
