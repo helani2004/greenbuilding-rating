@@ -255,6 +255,13 @@ const documentFor = row => ({
   ...row.document,
   id: row.id,
   revision: row.revision,
+  categories: row.document.categories.map(category => ({
+    ...category,
+    credits: category.credits.map(item => ({
+      ...item,
+      selectablePoints: Number(item.maxPoints) > 1,
+    })),
+  })),
 });
 
 async function standard(id) {
