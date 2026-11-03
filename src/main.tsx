@@ -64,24 +64,76 @@ function itemForm(item:D,credit:boolean){const saved=project.answers[item.id],va
   >
     {item.intent}
   </p>
-)}</div><span className={item.achieved?'status achieved':'status'}>{credit?`Points contested: ${item.points} / ${item.maxPoints}`:item.achieved?'Prerequisite achieved':saved?'Prerequisite not achieved':'Not completed'}</span></div><fieldset disabled={disabled} className="assessment-fields"><div className="input-fields">{(item.fields||[{id:'answer',label:'Requirement met?',type:'yesno',required:true}]).map((f:D)=><label key={f.id}>{f.label}{f.unit?` (${f.unit})`:''}{f.required?' *':''}{f.type==='yesno'||f.type==='select'?<select value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}><option value="">Choose an answer</option>{(f.type==='yesno'?['yes','no']:f.options||[]).map((o:string)=><option key={o} value={o}>{o==='yes'?'Yes':o==='no'?'No':o}</option>)}</select>:<input type={f.type==='number'?'number':'text'} step="any" value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}/>}</label>)}</div>{credit && item.selectablePoints && (
+)}</div><span className={item.achieved?'status achieved':'status'}>{credit?`Points contested: ${item.points} / ${item.maxPoints}`:item.achieved?'Prerequisite achieved':saved?'Prerequisite not achieved':'Not completed'}</span></div><fieldset disabled={disabled} className="assessment-fields"><div className="input-fields">{(item.fields||[{id:'answer',label:'Requirement met?',type:'yesno',required:true}]).map((f:D)=><label key={f.id}>{f.label}{f.unit?` (${f.unit})`:''}{f.required?' *':''}{f.type==='yesno'||f.type==='select'?<select value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}><option value="">Choose an answer</option>{(f.type==='yesno'?['yes','no']:f.options||[]).map((o:string)=><option key={o} value={o}>{o==='yes'?'Yes':o==='no'?'No':o}</option>)}</select>:<input type={f.type==='number'?'number':'text'} step="any" value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}/>}</label>)}</div>{credit && Number(item.maxPoints) > 1 && (
   <label>
     Points contested — maximum {item.maxPoints}
 
-    <input
-      type="number"
-      min="0"
-      max={item.maxPoints}
-      step="1"
-      value={values.claimedPoints ?? ''}
-      onChange={e =>
-        edit(item.id, 'claimedPoints', e.target.value)
-      }
-    />
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 8,
+      }}
+    >
+      <button
+        type="button"
+        className="secondary"
+        aria-label="Decrease points"
+        onClick={() =>
+          edit(
+            item.id,
+            'claimedPoints',
+            String(
+              Math.max(
+                0,
+                Number(
+                  values.claimedPoints ?? item.maxPoints
+                ) - 1
+              )
+            )
+          )
+        }
+      >
+        −
+      </button>
+
+      <input
+        type="number"
+        min="0"
+        max={item.maxPoints}
+        step="1"
+        value={values.claimedPoints ?? item.maxPoints}
+        onChange={e =>
+          edit(item.id, 'claimedPoints', e.target.value)
+        }
+        style={{ width: 100, textAlign: 'center' }}
+      />
+
+      <button
+        type="button"
+        className="secondary"
+        aria-label="Increase points"
+        onClick={() =>
+          edit(
+            item.id,
+            'claimedPoints',
+            String(
+              Math.min(
+                item.maxPoints,
+                Number(
+                  values.claimedPoints ?? item.maxPoints
+                ) + 1
+              )
+            )
+          )
+        }
+      >
+        +
+      </button>
+    </div>
 
     <small>
-      Choose a whole number from 0 to {item.maxPoints}.
-      Required answers and supporting evidence still apply.
+      Choose 0 to {item.maxPoints}, then click Save.
     </small>
   </label>
 )}<label>Supporting document {item.evidenceRequired===false?'(optional)':'(required for achievement)'}<input key={saved?.savedAt||'initial'} type="file" onChange={e=>{const file=e.target.files?.[0];if(file){setFiles(old=>({...old,[item.id]:file}));setMessage('');}}}/>{files[item.id]&&<small>Pending: {files[item.id].name}</small>}{saved?.evidenceName&&<a className="evidence" href={`/api/projects/${project.id}/evidence/${saved.evidenceId}`}>Download saved: {saved.evidenceName}</a>}</label><button type="button" className="secondary" onClick={()=>void save(item.id)}>Save</button></fieldset>{(drafts[item.id]||files[item.id])&&<small className="pending">Unsaved changes — displayed result uses your last saved answers.</small>}</div>;}
