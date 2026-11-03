@@ -17,7 +17,30 @@ function send(res,status,value){res.writeHead(status,{'Content-Type':'applicatio
 async function body(req){let chunks=[],size=0;for await(const c of req){size+=c.length;if(size>45*1024*1024)throw Error('Category upload too large. Save smaller files or save items separately (30 MB combined file limit).');chunks.push(c);}try{return JSON.parse(Buffer.concat(chunks).toString()||'{}');}catch{throw Error('Invalid JSON request.');}}
 function admin(req){const t=req.headers.authorization?.replace(/^Bearer /,'');if(!t||!sessions.has(t)||sessions.get(t)<Date.now()){const e=Error('Admin sign-in required.');e.status=401;throw e;}}
 const safeText=(v,max)=>typeof v==='string'&&v.trim()&&v.length<=max;
-function validateValues(item,values){if(!values||typeof values!=='object'||Array.isArray(values))throw Error('Invalid field values.');for(const [key,val]of Object.entries(values)){const f=item.fields.find(f=>f.id===key);if(!f)throw Error('Unknown field: '+key);if(val===''||val==null)continue;if(!['string','number'].includes(typeof val)||String(val).length>10000)throw Error('Invalid field value.');if(f.type==='yesno'&&!['yes','no'].includes(val))throw Error('Choose Yes or No.');if(f.type==='number'&&!Number.isFinite(Number(val)))throw Error('Enter a valid number.');if(f.type==='select'&&!f.options.includes(val))throw Error('Choose an available option.');}}
+function validateValues(item,values){if(!values||typeof values!=='object'||Array.isArray(values))throw Error('Invalid field values.');for(const [key,val]of Object.entries(values)){if (key === 'claimedPoints' && item.selectablePoints) {
+  // Allow incomplete progress to be saved.
+  // An empty point selection contributes zero.
+  if (val === '' || val == null) continue;
+
+  const points = Number(val);
+
+  if (
+    !['string', 'number'].includes(typeof val) ||
+    !Number.isInteger(points) ||
+    points < 0 ||
+    points > item.maxPoints
+  ) {
+    throw Error(
+      'Points must be a whole number between 0 and ' +
+      item.maxPoints +
+      '.'
+    );
+  }
+
+  continue;
+}
+
+const f = item.fields.find(f => f.id === key);if(!f)throw Error('Unknown field: '+key);if(val===''||val==null)continue;if(!['string','number'].includes(typeof val)||String(val).length>10000)throw Error('Invalid field value.');if(f.type==='yesno'&&!['yes','no'].includes(val))throw Error('Choose Yes or No.');if(f.type==='number'&&!Number.isFinite(Number(val)))throw Error('Enter a valid number.');if(f.type==='select'&&!f.options.includes(val))throw Error('Choose an available option.');}}
 async function saveAnswers(project,category,entries,markSaved){
  if(!Array.isArray(entries)||entries.length>200)throw Error('Invalid answers.');const next=structuredClone(db);const p=next.projects[project.id];const standard=standardFor(project);const seen=new Set();let totalBytes=0;const uploads=[];
  const ordered=[...entries].sort((a,b)=>Number(category.credits.some(i=>i.id===a.itemId))-Number(category.credits.some(i=>i.id===b.itemId)));
