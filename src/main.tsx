@@ -2,8 +2,35 @@ import OnlineSession from './OnlineSession';
 import {useEffect,useState,useRef} from 'react';import {createRoot} from 'react-dom/client';import Admin from './Admin';import {api} from './api';import './styles.css';
 type D=any;
 function App(){const [projects,setProjects]=useState<D[]>([]),[standards,setStandards]=useState<D[]>([]),[project,setProject]=useState<D>(null),[category,setCategory]=useState('MN'),[name,setName]=useState(''),[type,setType]=useState('new'),[version,setVersion]=useState(''),[error,setError]=useState(''),[busy,setBusy]=useState(false),[page,setPage]=useState(location.hash==='#admin'?'admin':'user');const dirtyRef=useRef(false);
-async function load(){setError('');try{const [p,s]=await Promise.all([api('/projects'),api('/standards')]);setProjects(p);setStandards(s);setVersion(old=>old||[...s].reverse().find((v:D)=>v.buildingType==='new')?.id||'');}catch(e){setError((e as Error).message);}}
-useEffect(()=>{void load();},[]);
+async function load() {
+  setError('');
+
+  try {
+    const [p, s] = await Promise.all([
+      api('/projects'),
+      api('/standards'),
+    ]);
+
+    setProjects(p);
+    setStandards(s);
+
+    setVersion(current => {
+      const candidates = s.filter(
+        (v: D) => v.buildingType === type
+      );
+
+      const selectionExists = candidates.some(
+        (v: D) => v.id === current
+      );
+
+      return selectionExists
+        ? current
+        : candidates[0]?.id || '';
+    });
+  } catch (error) {
+    setError((error as Error).message);
+  }
+}useEffect(()=>{void load();},[]);
 function navigate(fn:()=>void){if(dirtyRef.current&&!window.confirm('There are unsaved changes. Discard them and continue?'))return;dirtyRef.current=false;fn();}
 function update(p:D){setProject(p);setProjects(old=>[p,...old.filter(x=>x.id!==p.id)]);}
 async function create(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');try{update(await api('/projects',{name,standardId:version}));setCategory('MN');}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
