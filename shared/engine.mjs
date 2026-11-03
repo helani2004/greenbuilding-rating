@@ -8,7 +8,26 @@ export function rulePoints(item,answer,credit){
  if(fields.some(f=>f.required&&!filled(values[f.id])))return 0;
  if(item.evidenceRequired!==false&&!answer?.evidenceId)return 0;
  const rule=item.rule||{type:'all',conditions:[{field:'answer',operator:'eq',value:'yes'}]};
- const cap=credit?item.maxPoints:1;
+ const selected = Number(values.claimedPoints);
+
+if (
+  credit &&
+  item.selectablePoints &&
+  (
+    !filled(values.claimedPoints) ||
+    !Number.isInteger(selected) ||
+    selected < 0 ||
+    selected > item.maxPoints
+  )
+) {
+  return 0;
+}
+
+const cap = credit
+  ? item.selectablePoints
+    ? selected
+    : item.maxPoints
+  : 1;
  if(rule.type==='thresholds'){
   if(!filled(values[rule.field])||!Number.isFinite(Number(values[rule.field])))return 0;
   return Math.min(cap,Math.max(0,...rule.bands.filter(b=>Number(values[rule.field])>=b.min).map(b=>b.points)));
@@ -40,6 +59,25 @@ export function validateStandard(standard){
   if(Math.abs(cat.credits.reduce((sum,c)=>sum+Number(c.maxPoints||0),0)-cat.maxPoints)>1e-8)errors.push(`${cat.id}: credit maximums must add up to ${cat.maxPoints}.`);
   for(const item of [...cat.prerequisites,...cat.credits]){
    const prefix=`${cat.id} / ${item.title||item.id}`;
+   if (
+  item.selectablePoints &&
+  (
+    !cat.credits.includes(item) ||
+    !Number.isInteger(item.maxPoints) ||
+    item.maxPoints < 2 ||
+    item.maxPoints > 100
+  )
+) {
+  errors.push(
+    `${prefix}: selectable points require a whole-number maximum from 2 to 100.`
+  );
+}
+
+if (item.fields?.some(f => f.id === 'claimedPoints')) {
+  errors.push(
+    `${prefix}: claimedPoints is reserved for the point selector. Use another field ID.`
+  );
+}
    if(!text(item.id,100)||!safeId(item.id)||itemIds.has(item.id))errors.push(`${prefix}: use a unique safe item ID.`);itemIds.add(item.id);
    if(!text(item.title,250)||!text(item.help,10000))errors.push(`${prefix}: title and document help are required.`);
    const credit=cat.credits.includes(item);if(credit&&(!Number.isFinite(item.maxPoints)||item.maxPoints<=0))errors.push(`${prefix}: invalid credit points.`);
