@@ -8,13 +8,16 @@ export function rulePoints(item,answer,credit){
  if(fields.some(f=>f.required&&!filled(values[f.id])))return 0;
  if(item.evidenceRequired!==false&&!answer?.evidenceId)return 0;
  const rule=item.rule||{type:'all',conditions:[{field:'answer',operator:'eq',value:'yes'}]};
- const selected = Number(values.claimedPoints);
+ const selected = Number(
+  values.claimedPoints ?? item.maxPoints
+ );
 
 if (
   credit &&
   item.selectablePoints &&
   (
-    !filled(values.claimedPoints) ||
+    (values.claimedPoints !== undefined &&
+     !filled(values.claimedPoints)) ||
     !Number.isInteger(selected) ||
     selected < 0 ||
     selected > item.maxPoints
