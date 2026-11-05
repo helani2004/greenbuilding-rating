@@ -1,3 +1,4 @@
+import DocumentItem from './DocumentItem';
 import OnlineSession from './OnlineSession';
 import {useEffect,useState,useRef} from 'react';import {createRoot} from 'react-dom/client';import Admin from './Admin';import {api} from './api';import './styles.css';
 type D=any;
@@ -136,14 +137,62 @@ return <div className="shell"><aside><div className="brand"><span className="log
 {!project?<section className="welcome"><p className="eyebrow">BUILD BETTER, MEASURE CLEARLY</p><h1>Start your building<br/>assessment.</h1><p>Select a standard version, save supporting evidence, and work through eight categories.</p><form onSubmit={create} className="card"><h2>Create a project</h2><label>Building type<select value={type} onChange={e=>{setType(e.target.value);setVersion([...standards].reverse().find(s=>s.buildingType===e.target.value)?.id||'');}}>{types.map(t=><option key={t} value={t}>{t==='new'?'New Buildings':t==='existing'?'Existing Buildings':t}</option>)}</select></label><label>Rating standard version<select required value={version} onChange={e=>setVersion(e.target.value)}><option value="">Choose a version</option>{available.map(s=><option key={s.id} value={s.id}>{s.label}</option>)}</select></label><label>Project name<input maxLength={160} required value={name} onChange={e=>setName(e.target.value)} placeholder="e.g. Piliyandala office building"/></label><button className="primary" disabled={busy||!version}>{busy?'Creating…':'Create assessment →'}</button></form></section>:<><div className="title-row"><div><p className="eyebrow">{project.standard.label}</p><h1>{project.name}</h1><p>Version locked to this project. Complete each category’s prerequisites before its credits.</p></div><div className="score"><strong>{project.result.total}<span> / {project.result.maxPoints}</span></strong><small>Demonstration points contested</small></div></div><div className="categories">{project.result.categories.map((c:D)=><button key={c.id} onClick={()=>navigate(()=>setCategory(c.id))} className={category===c.id?'category selected':'category'}><span>{c.id}</span><strong>{c.title}</strong><small>{c.implemented?`${c.points} / ${c.maxPoints} points`:'Legacy version — not configured'}</small>{project.categorySavedAt?.[c.id]&&<small>Saved</small>}</button>)}</div><Category key={project.id+category} project={project} categoryId={category} onSave={update} onDirty={v=>{dirtyRef.current=v;}}/></>}
 <footer>Keep both terminals open. Your saved records and evidence are stored by the local backend.</footer></>}</main></div>;
 }
-function Category({project,categoryId,onSave,onDirty}:{project:D;categoryId:string;onSave:(p:D)=>void;onDirty:(v:boolean)=>void}){const category=project.result.categories.find((c:D)=>c.id===categoryId);const [drafts,setDrafts]=useState<Record<string,D>>({}),[files,setFiles]=useState<Record<string,File>>({}),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');const dirty=Object.keys(drafts).length>0||Object.keys(files).length>0;
+function Category({project,categoryId,onSave,onDirty}:{project:D;categoryId:string;onSave:(p:D)=>void;onDirty:(v:boolean)=>void}){const category=project.result.categories.find((c:D)=>c.id===categoryId);const [drafts,setDrafts]=useState<Record<string,D>>({}),[files,setFiles]=useState<Record<string,File>>({}),[busy,setBusy]=useState(false),[message,setMessage]=useState(''),[error,setError]=useState('');const [documentDirty, setDocumentDirty] =
+  useState<Record<string, boolean>>({});
+
+const documentSavers =
+  useRef<Record<string, () => Promise<void>>>({});
+
+const dirty =
+  Object.keys(drafts).length > 0 ||
+  Object.keys(files).length > 0 ||
+  Object.values(documentDirty).some(Boolean);
 useEffect(()=>{onDirty(dirty);const listener=(e:BeforeUnloadEvent)=>{if(dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',listener);return()=>window.removeEventListener('beforeunload',listener);},[dirty]);
 function edit(id:string,field:string,value:string){setDrafts(old=>({...old,[id]:{...(old[id]||project.answers[id]?.values||{answer:project.answers[id]?.answer||''}),[field]:value}}));setMessage('');}
-async function save(itemId?:string){setBusy(true);setError('');setMessage('');try{const ids=itemId?[itemId]:[...new Set([...Object.keys(drafts),...Object.keys(files)])];const answers=[];for(const id of ids){let file;if(files[id]){const f=files[id];if (f.size > 2 * 1024 * 1024) {
+async function save(itemId?:string){setBusy(true);setError('');setMessage('');try {
+  if (!itemId) {
+  for (
+    const saveDocument of Object.values(
+      documentSavers.current
+    )
+  ) {
+    await saveDocument();
+  }
+}
+const ids=itemId?[itemId]:[...new Set([...Object.keys(drafts),...Object.keys(files)])];const answers=[];for(const id of ids){let file;if(files[id]){const f=files[id];if (f.size > 2 * 1024 * 1024) {
   throw Error('Each file must be 2 MB or smaller.');
 }const base64=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(Error('Cannot read the selected file.'));reader.readAsDataURL(f);});file={name:f.name,base64};}answers.push({itemId:id,values:drafts[id]||project.answers[id]?.values||{answer:project.answers[id]?.answer||''},...(file?{file}:{})});}
 const p=await api('/projects/'+project.id+(itemId?'/answers':'/categories/'+categoryId),itemId?answers[0]:{answers});onSave(p);setDrafts(old=>Object.fromEntries(Object.entries(old).filter(([id])=>!ids.includes(id))));setFiles(old=>Object.fromEntries(Object.entries(old).filter(([id])=>!ids.includes(id))));setMessage(itemId?'Item saved.':'Category saved. All pending answers and files have been stored.');}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
-function itemForm(item:D,credit:boolean){const saved=project.answers[item.id],values=drafts[item.id]||saved?.values||{answer:saved?.answer||''};const disabled=busy||(credit&&!category.unlocked);return <div className={'item card '+(disabled?'locked':'')} key={item.id}><div className="item-head"><div><small>{item.id}</small><h3>
+function itemForm(item:D,credit:boolean){if (item.documentOptions?.length) {
+  return (
+    <DocumentItem
+      key={item.id}
+      item={item}
+      project={project}
+      locked={
+        busy || (credit && !category.unlocked)
+      }
+      onSave={onSave}
+      onDirty={value =>
+        setDocumentDirty(previous =>
+          previous[item.id] === value
+            ? previous
+            : {
+                ...previous,
+                [item.id]: value,
+              }
+        )
+      }
+      register={(id, saveDocument) => {
+        if (saveDocument) {
+          documentSavers.current[id] = saveDocument;
+        } else {
+          delete documentSavers.current[id];
+        }
+      }}
+    />
+  );
+}const saved=project.answers[item.id],values=drafts[item.id]||saved?.values||{answer:saved?.answer||''};const disabled=busy||(credit&&!category.unlocked);return <div className={'item card '+(disabled?'locked':'')} key={item.id}><div className="item-head"><div><small>{item.id}</small><h3>
   {item.title}
   {' '}
   <Help title={item.title} text={item.help}/>
@@ -161,79 +210,7 @@ function itemForm(item:D,credit:boolean){const saved=project.answers[item.id],va
   >
     {item.intent}
   </p>
-)}</div><span className={item.achieved?'status achieved':'status'}>{credit?`Points contested: ${item.points} / ${item.maxPoints}`:item.achieved?'Prerequisite achieved':saved?'Prerequisite not achieved':'Not completed'}</span></div><fieldset disabled={disabled} className="assessment-fields"><div className="input-fields">{(item.fields||[{id:'answer',label:'Requirement met?',type:'yesno',required:true}]).map((f:D)=><label key={f.id}>{f.label}{f.unit?` (${f.unit})`:''}{f.required?' *':''}{f.type==='yesno'||f.type==='select'?<select value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}><option value="">Choose an answer</option>{(f.type==='yesno'?['yes','no']:f.options||[]).map((o:string)=><option key={o} value={o}>{o==='yes'?'Yes':o==='no'?'No':o}</option>)}</select>:<input type={f.type==='number'?'number':'text'} step="any" value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}/>}</label>)}</div>{credit && Number(item.maxPoints) > 1 && (
-  <label>
-    Points contested — maximum {item.maxPoints}
-
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: 8,
-      }}
-    >
-      <button
-        type="button"
-        className="secondary"
-        aria-label="Decrease points"
-        onClick={() =>
-          edit(
-            item.id,
-            'claimedPoints',
-            String(
-              Math.max(
-                0,
-                Number(
-                  values.claimedPoints ?? item.maxPoints
-                ) - 1
-              )
-            )
-          )
-        }
-      >
-        −
-      </button>
-
-      <input
-        type="number"
-        min="0"
-        max={item.maxPoints}
-        step="1"
-        value={values.claimedPoints ?? item.maxPoints}
-        onChange={e =>
-          edit(item.id, 'claimedPoints', e.target.value)
-        }
-        style={{ width: 100, textAlign: 'center' }}
-      />
-
-      <button
-        type="button"
-        className="secondary"
-        aria-label="Increase points"
-        onClick={() =>
-          edit(
-            item.id,
-            'claimedPoints',
-            String(
-              Math.min(
-                item.maxPoints,
-                Number(
-                  values.claimedPoints ?? item.maxPoints
-                ) + 1
-              )
-            )
-          )
-        }
-      >
-        +
-      </button>
-    </div>
-
-    <small>
-      Choose 0 to {item.maxPoints}, then click Save.
-    </small>
-  </label>
-)}<label>Supporting document {item.evidenceRequired===false?'(optional)':'(required for achievement)'}<input key={saved?.savedAt||'initial'} type="file" onChange={e=>{const file=e.target.files?.[0];if(file){setFiles(old=>({...old,[item.id]:file}));setMessage('');}}}/>{files[item.id]&&<small>Pending: {files[item.id].name}</small>}{saved?.evidenceName&&<a className="evidence" href={`/api/projects/${project.id}/evidence/${saved.evidenceId}`}>Download saved: {saved.evidenceName}</a>}</label><button type="button" className="secondary" onClick={()=>void save(item.id)}>Save</button></fieldset>{(drafts[item.id]||files[item.id])&&<small className="pending">Unsaved changes — displayed result uses your last saved answers.</small>}</div>;}
+)}</div><span className={item.achieved?'status achieved':'status'}>{credit?`Points contested: ${item.points} / ${item.maxPoints}`:item.achieved?'Prerequisite achieved':saved?'Prerequisite not achieved':'Not completed'}</span></div><fieldset disabled={disabled} className="assessment-fields"><div className="input-fields">{(item.fields||[{id:'answer',label:'Requirement met?',type:'yesno',required:true}]).map((f:D)=><label key={f.id}>{f.label}{f.unit?` (${f.unit})`:''}{f.required?' *':''}{f.type==='yesno'||f.type==='select'?<select value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}><option value="">Choose an answer</option>{(f.type==='yesno'?['yes','no']:f.options||[]).map((o:string)=><option key={o} value={o}>{o==='yes'?'Yes':o==='no'?'No':o}</option>)}</select>:<input type={f.type==='number'?'number':'text'} step="any" value={values[f.id]??''} onChange={e=>edit(item.id,f.id,e.target.value)}/>}</label>)}</div><label>Supporting document {item.evidenceRequired===false?'(optional)':'(required for achievement)'}<input key={saved?.savedAt||'initial'} type="file" onChange={e=>{const file=e.target.files?.[0];if(file){setFiles(old=>({...old,[item.id]:file}));setMessage('');}}}/>{files[item.id]&&<small>Pending: {files[item.id].name}</small>}{saved?.evidenceName&&<a className="evidence" href={`/api/projects/${project.id}/evidence/${saved.evidenceId}`}>Download saved: {saved.evidenceName}</a>}</label><button type="button" className="secondary" onClick={()=>void save(item.id)}>Save</button></fieldset>{(drafts[item.id]||files[item.id])&&<small className="pending">Unsaved changes — displayed result uses your last saved answers.</small>}</div>;}
 return <section><div className="section-title"><h2>{category.title}</h2><span className="pill">{category.points} / {category.maxPoints} points</span></div>{category.implemented===false?<div className="card"><p>This older project retains its original Management-only standard. Create a project with the new eight-category version to assess other categories. Your existing evidence is preserved.</p></div>:<><h3>01 · Prerequisites</h3><p>{category.prerequisites.length?'Save the required answers and evidence to unlock credits. Click (?) for document guidance.':'This category has no prerequisites in this version. Its credits are available immediately.'}</p>{category.prerequisites.map((i:D)=>itemForm(i,false))}<div className="section-title"><h3>02 · Credits</h3><span className="pill">{category.unlocked?'Unlocked':'Locked — prerequisites required'}</span></div>{category.credits.map((i:D)=>itemForm(i,true))}</>}
 {error&&<div role="alert" className="error">{error}</div>}{message&&<p role="status" className="success">{message}</p>}<div className="card category-save"><div><h3>Save {category.title}</h3><p>{dirty?'You have unsaved changes.':project.categorySavedAt?.[categoryId]?'Last saved: '+new Date(project.categorySavedAt[categoryId]).toLocaleString():'Save your category progress whenever you need to stop.'}</p><small>Saving stores progress. Achievement and points depend on the configured rules.</small></div><button type="button" className="primary" disabled={busy} onClick={()=>void save()}>{busy?'Saving…':'Save category'}</button></div><div className="card report"><h3>Final PDF report</h3><p>Dashboard-matched PDF reporting remains a separate implementation step. These demonstration assessments do not issue a certified rating.</p></div></section>;
 }
