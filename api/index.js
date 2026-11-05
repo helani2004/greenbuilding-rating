@@ -1,4 +1,9 @@
 import {
+  documentOptions,
+  evidenceComplete,
+  validDocumentId,
+} from '../shared/documents.mjs';
+import {
   documentCatalog,
 } from '../shared/document-catalog.mjs';
 import { readFileSync } from 'node:fs';
@@ -514,7 +519,9 @@ async function saveAnswers(
     }
 
     seen.add(item.id);
-
+if (documentOptions(item).length) {
+  fail('Use the document dropdown to save this item.');
+}
     const values = entry.values || { answer: entry.answer };
     validateValues(item, values);
 
@@ -696,7 +703,246 @@ export default async function handler(req, res) {
     }
 
     const account = await user(req, res);
+// Refresh the saved project.
+const refreshRoute = path.match(
+  /^\/projects\/([a-f0-9-]+)$/
+);
 
+if (refreshRoute && method === 'GET') {
+  const row = await project(refreshRoute[1], account);
+  return json(res, 200, await view(row));
+}
+
+// Save or delete an individual document selection.
+const entryRoute = path.match(
+  /^\/projects\/([a-f0-9-]+)\/document-entries\/([A-Za-z0-9_-]+)\/([A-Za-z0-9_-]+)$/
+);
+
+if (
+  entryRoute &&
+  ['POST', 'DELETE'].includes(method)
+) {
+  const row = await project(entryRoute[1], account);
+
+  if (row.data.deleting) {
+    fail('Project deletion is in progress.', 409);
+  }
+
+  const s = await standard(row.standard_id);
+
+  const category = s.categories.find(category =>
+    [
+      ...category.prerequisites,
+      ...category.credits,
+    ].some(item => item.id === entryRoute[2])
+  );
+
+  const item = category && [
+    ...category.prerequisites,
+    ...category.credits,
+  ].find(item => item.id === entryRoute[2]);
+
+  if (!item) fail('Item not found.', 404);
+
+  const documentId = entryRoute[3];
+
+  if (
+    documentId !== 'legacy' &&
+    !validDocumentId(documentId)
+  ) {
+    fail('Invalid document ID.');
+  }
+
+  const p = structuredClone(row.data);
+
+  p.answers ||= {};
+  p.files ||= {};
+
+  const answer = p.answers[item.id] || {
+    values: {},
+    documents: {},
+  };
+
+  answer.documents ||= {};
+
+  if (method === 'DELETE') {
+    const existing = documentId === 'legacy'
+      ? (
+          answer.evidenceId
+            ? {evidenceId: answer.evidenceId}
+            : null
+        )
+      : answer.documents[documentId];
+
+    if (!existing) {
+      fail(
+        'Saved entry not found. Refresh this panel.',
+        404
+      );
+    }
+
+    const file = existing.evidenceId
+      ? p.files[existing.evidenceId]
+      : null;
+
+    if (documentId === 'legacy') {
+      answer.evidenceId = null;
+      answer.evidenceName = null;
+      answer.values = {
+        ...answer.values,
+        answer: 'no',
+      };
+      answer.answer = 'no';
+    } else {
+      delete answer.documents[documentId];
+    }
+
+    if (file) file.detached = true;
+
+    answer.savedAt = new Date().toISOString();
+    p.answers[item.id] = answer;
+
+    const saved = await updateProject(row, p);
+    let warning = '';
+
+    if (file?.path) {
+      try {
+        await remote('/storage/v1/object/evidence', {
+          method: 'DELETE',
+          body: {prefixes: [file.path]},
+        });
+      } catch {
+        warning =
+          'Entry removed and option unlocked. Storage cleanup failed; its reference is retained for project deletion cleanup.';
+      }
+    }
+
+    return json(res, 200, {
+      ...await view(saved),
+      ...(warning ? {warning} : {}),
+    });
+  }
+
+  const option = documentOptions(item).find(
+    option => option.id === documentId
+  );
+
+  if (!option) {
+    fail('This document option is not configured.');
+  }
+
+  if (answer.documents[documentId]) {
+    fail(
+      'This option is already saved. Delete its table row before using it again.',
+      409
+    );
+  }
+
+  const isCredit = category.credits.some(
+    credit => credit.id === item.id
+  );
+
+  const unlocked = evaluate(s, p.answers)
+    .categories.find(
+      result => result.id === category.id
+    ).unlocked;
+
+  if (isCredit && !unlocked) {
+    fail(
+      'Complete prerequisites before saving credit documents.'
+    );
+  }
+
+  const request = await body(req);
+
+  if (!['yes', 'no'].includes(request.availability)) {
+    fail('Choose Yes or No.');
+  }
+
+  const values = {
+    ...(answer.values || {}),
+    ...(request.values || {}),
+  };
+
+  delete values.claimedPoints;
+  values.answer = 'no';
+
+  validateValues(item, values);
+
+  let bytes = null;
+  let fileId = null;
+  let filePath = null;
+  let fileName = null;
+
+  if (request.file) {
+    const file = request.file;
+
+    if (
+      typeof file.name !== 'string' ||
+      !file.name.toLowerCase().endsWith('.pdf') ||
+      typeof file.base64 !== 'string' ||
+      !/^[A-Za-z0-9+/]+={0,2}$/.test(file.base64)
+    ) {
+      fail('Upload a PDF document.');
+    }
+
+    bytes = Buffer.from(file.base64, 'base64');
+
+    if (
+      bytes.length > 2 * 1024 * 1024 ||
+      bytes.subarray(0, 5).toString() !== '%PDF-'
+    ) {
+      fail('Upload a valid PDF up to 2 MB.');
+    }
+
+    fileId = randomUUID();
+    filePath =
+      row.owner_id + '/' + row.id + '/' + fileId;
+    fileName = file.name.slice(0, 180);
+  }
+
+  if (request.availability === 'yes' && !bytes) {
+    fail('Upload the PDF before saving Yes.');
+  }
+
+  const now = new Date().toISOString();
+
+  answer.documents[documentId] = {
+    documentId,
+    label: option.label,
+    availability: request.availability,
+    evidenceId: fileId,
+    evidenceName: fileName,
+    savedAt: now,
+  };
+
+  answer.values = values;
+  answer.values.answer = evidenceComplete(item, answer)
+    ? 'yes'
+    : 'no';
+
+  answer.answer = answer.values.answer;
+  answer.savedAt = now;
+
+  p.answers[item.id] = answer;
+
+  if (fileId) {
+    p.files[fileId] = {
+      path: filePath,
+      name: fileName,
+    };
+  }
+
+  try {
+    if (bytes) await upload(filePath, bytes);
+
+    const saved = await updateProject(row, p);
+    return json(res, 200, await view(saved));
+  } catch (error) {
+    if (filePath) await cleanup([filePath]);
+    throw error;
+  }
+}
     if (method === 'POST' && path === '/admin/login') {
       const b = await body(req);
       const session = await login(account.email, b.password);
@@ -981,8 +1227,9 @@ if (method === 'DELETE' && deleteProjectMatch) {
       if (method === 'GET' && match[4]) {
         const file = row.data.files?.[match[4]];
 
-        if (!file) fail('Document not found.', 404);
-
+        if (!file || file.detached) {
+                fail('Document not found.', 404);
+        }
         const signed = await remote(
           '/storage/v1/object/sign/evidence/' + file.path,
           {
