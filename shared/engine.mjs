@@ -1,43 +1,88 @@
+import {
+  documentOptions,
+  evidenceComplete,
+  documentOptionErrors,
+} from './documents.mjs';
 export const CATEGORY_IDS=['MN','SS','WE','EA','MR','EQ','ID','SC'];
 const safeId=id=>typeof id==='string'&&/^[A-Za-z0-9_-]+$/.test(id)&&!['__proto__','constructor','prototype'].includes(id);
 const filled=v=>v!==undefined&&v!==null&&String(v).trim()!=='';
 export function conditionPass(condition,values){const value=values[condition.field];if(!filled(value))return false;switch(condition.operator){case 'eq':return String(value)===String(condition.value);case 'neq':return String(value)!==String(condition.value);case 'gte':return Number.isFinite(Number(value))&&Number(value)>=Number(condition.value);case 'lte':return Number.isFinite(Number(value))&&Number(value)<=Number(condition.value);case 'gt':return Number.isFinite(Number(value))&&Number(value)>Number(condition.value);case 'lt':return Number.isFinite(Number(value))&&Number(value)<Number(condition.value);case 'notEmpty':return filled(value);default:return false;}}
-export function rulePoints(item,answer,credit){
- const values=answer?.values||{answer:answer?.answer};
- const fields=item.fields||[{id:'answer',required:true}];
- if(fields.some(f=>f.required&&!filled(values[f.id])))return 0;
- if(item.evidenceRequired!==false&&!answer?.evidenceId)return 0;
- const rule=item.rule||{type:'all',conditions:[{field:'answer',operator:'eq',value:'yes'}]};
- const selected = Number(
-  values.claimedPoints ?? item.maxPoints
- );
+export function rulePoints(item, answer, credit) {
+  const values = {
+    ...(answer?.values || {answer: answer?.answer}),
+  };
 
-if (
-  credit &&
-  item.selectablePoints &&
-  (
-    (values.claimedPoints !== undefined &&
-     !filled(values.claimedPoints)) ||
-    !Number.isInteger(selected) ||
-    selected < 0 ||
-    selected > item.maxPoints
-  )
-) {
-  return 0;
-}
+  const usesDocuments = documentOptions(item).length > 0;
 
-const cap = credit
-  ? item.selectablePoints
-    ? selected
-    : item.maxPoints
-  : 1;
- if(rule.type==='thresholds'){
-  if(!filled(values[rule.field])||!Number.isFinite(Number(values[rule.field])))return 0;
-  return Math.min(cap,Math.max(0,...rule.bands.filter(b=>Number(values[rule.field])>=b.min).map(b=>b.points)));
- }
- const conditions=rule.conditions||[];const matches=conditions.map(c=>conditionPass(c,values));
- if(rule.type==='sum')return Math.min(cap,conditions.reduce((sum,c,i)=>sum+(matches[i]?c.points:0),0));
- const pass=rule.type==='any'?matches.some(Boolean):matches.every(Boolean);return pass?cap:0;
+  if (usesDocuments) {
+    if (!evidenceComplete(item, answer)) return 0;
+    values.answer = 'yes';
+  }
+
+  const fields = item.fields || [
+    {id: 'answer', required: true},
+  ];
+
+  if (
+    fields.some(
+      field => field.required && !filled(values[field.id])
+    )
+  ) {
+    return 0;
+  }
+
+  if (
+    !usesDocuments &&
+    item.evidenceRequired !== false &&
+    !answer?.evidenceId
+  ) {
+    return 0;
+  }
+
+  const rule = item.rule || {
+    type: 'all',
+    conditions: [
+      {field: 'answer', operator: 'eq', value: 'yes'},
+    ],
+  };
+
+  const maximum = credit ? item.maxPoints : 1;
+
+  if (rule.type === 'thresholds') {
+    const value = values[rule.field];
+
+    if (!filled(value) || !Number.isFinite(Number(value))) {
+      return 0;
+    }
+
+    const eligible = rule.bands
+      .filter(band => Number(value) >= band.min)
+      .map(band => band.points);
+
+    return Math.min(maximum, Math.max(0, ...eligible));
+  }
+
+  const conditions = rule.conditions || [];
+
+  const matches = conditions.map(condition =>
+    conditionPass(condition, values)
+  );
+
+  if (rule.type === 'sum') {
+    const total = conditions.reduce(
+      (sum, condition, index) =>
+        sum + (matches[index] ? condition.points : 0),
+      0
+    );
+
+    return Math.min(maximum, total);
+  }
+
+  const passed = rule.type === 'any'
+    ? matches.some(Boolean)
+    : matches.every(Boolean);
+
+  return passed ? maximum : 0;
 }
 export function evaluate(standard,answers={}){
  const categories=standard.categories.map(category=>{
@@ -62,6 +107,11 @@ export function validateStandard(standard){
   if(Math.abs(cat.credits.reduce((sum,c)=>sum+Number(c.maxPoints||0),0)-cat.maxPoints)>1e-8)errors.push(`${cat.id}: credit maximums must add up to ${cat.maxPoints}.`);
   for(const item of [...cat.prerequisites,...cat.credits]){
    const prefix=`${cat.id} / ${item.title||item.id}`;
+   errors.push(
+  ...documentOptionErrors(item).map(
+    error => `${prefix}: ${error}`
+  )
+);
    if (
   item.selectablePoints &&
   (
