@@ -33,9 +33,106 @@ async function load() {
 }useEffect(()=>{void load();},[]);
 function navigate(fn:()=>void){if(dirtyRef.current&&!window.confirm('There are unsaved changes. Discard them and continue?'))return;dirtyRef.current=false;fn();}
 function update(p:D){setProject(p);setProjects(old=>[p,...old.filter(x=>x.id!==p.id)]);}
+async function deleteProject(p: D) {
+  if (
+    dirtyRef.current &&
+    !window.confirm(
+      'You have unsaved changes. Continue to project deletion?'
+    )
+  ) {
+    return;
+  }
+
+  const confirmation = window.prompt(
+    `Permanently delete "${p.name}"?\n\n` +
+    'All saved answers and uploaded documents will be deleted. ' +
+    'This cannot be undone.\n\n' +
+    'Type the exact project name to confirm:'
+  );
+
+  if (confirmation === null) return;
+
+  if (confirmation !== p.name) {
+    window.alert('The project name did not match. Nothing was deleted.');
+    return;
+  }
+
+  setBusy(true);
+
+  try {
+    await api(
+      '/projects/' + p.id,
+      { confirmName: confirmation },
+      undefined,
+      'DELETE'
+    );
+
+    setProjects(current =>
+      current.filter(saved => saved.id !== p.id)
+    );
+
+    if (project?.id === p.id) {
+      dirtyRef.current = false;
+      setProject(null);
+    }
+
+    setPage('user');
+    location.hash = '';
+  } catch (error) {
+    window.alert((error as Error).message);
+  } finally {
+    setBusy(false);
+  }
+}
 async function create(e:React.FormEvent){e.preventDefault();setBusy(true);setError('');try{update(await api('/projects',{name,standardId:version}));setCategory('MN');}catch(e){setError((e as Error).message);}finally{setBusy(false);}}
 const types=[...new Set(standards.map(s=>s.buildingType))];const available=standards.filter(s=>s.buildingType===type);
-return <div className="shell"><aside><div className="brand"><span className="logo">G</span><div>GREEN BUILDING<small>Assessment workspace</small></div></div><p className="eyebrow">YOUR WORKSPACE</p><button className={page==='user'&&!project?'nav active':'nav'} onClick={()=>navigate(()=>{setProject(null);setPage('user');location.hash='';void load();})}>＋ Create a project</button><button className={page==='admin'?'nav active':'nav'} onClick={()=>navigate(()=>{setPage('admin');location.hash='admin';})}>⚙ Admin · standards & versions</button>{projects.map(p=><button className={p.id===project?.id&&page==='user'?'nav active':'nav'} key={p.id} onClick={()=>navigate(()=>{update(p);setCategory('MN');setPage('user');location.hash='';})}>{p.name}<small>{p.buildingType}</small></button>)}<div className="aside-foot">Version 0.2<br/>Forms · evidence · admin versions</div></aside><main><header><span>GREENSL / {page==='admin'?'Admin':project?'Project assessment':'Projects'}</span><span className="pill">Local development</span></header>{page==='admin'?<Admin onDirty={v=>{dirtyRef.current=v;}}/>:<><div className="notice"><strong>Demonstration scoring</strong> · Document guidance and forms are editable. These checks do not inspect uploaded documents or represent verified compliance with the full rating standard.</div>{error&&<div role="alert" className="error">{error}<button className="secondary" onClick={()=>void load()}>Retry connection</button></div>}
+return <div className="shell"><aside><div className="brand"><span className="logo">G</span><div>GREEN BUILDING<small>Assessment workspace</small></div></div><p className="eyebrow">YOUR WORKSPACE</p><button className={page==='user'&&!project?'nav active':'nav'} onClick={()=>navigate(()=>{setProject(null);setPage('user');location.hash='';void load();})}>＋ Create a project</button><button className={page==='admin'?'nav active':'nav'} onClick={()=>navigate(()=>{setPage('admin');location.hash='admin';})}>⚙ Admin · standards & versions</button>{projects.map(p => (
+  <div className="project-list-row" key={p.id}>
+    <button
+      disabled={busy}
+      className={
+        p.id === project?.id && page === 'user'
+          ? 'nav active'
+          : 'nav'
+      }
+      onClick={() =>
+        navigate(() => {
+          update(p);
+          setCategory('MN');
+          setPage('user');
+          location.hash = '';
+        })
+      }
+    >
+      {p.name}
+      <small>
+        {p.buildingType}
+        {p.deleting ? ' · deletion pending' : ''}
+      </small>
+    </button>
+
+    <button
+      type="button"
+      className="project-trash"
+      disabled={busy}
+      title="Delete project"
+      aria-label={'Delete project ' + p.name}
+      onClick={() => void deleteProject(p)}
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        aria-hidden="true"
+      >
+        <path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7" />
+      </svg>
+    </button>
+  </div>
+))}<div className="aside-foot">Version 0.2<br/>Forms · evidence · admin versions</div></aside><main><header><span>GREENSL / {page==='admin'?'Admin':project?'Project assessment':'Projects'}</span><span className="pill">Local development</span></header>{page==='admin'?<Admin onDirty={v=>{dirtyRef.current=v;}}/>:<><div className="notice"><strong>Demonstration scoring</strong> · Document guidance and forms are editable. These checks do not inspect uploaded documents or represent verified compliance with the full rating standard.</div>{error&&<div role="alert" className="error">{error}<button className="secondary" onClick={()=>void load()}>Retry connection</button></div>}
 {!project?<section className="welcome"><p className="eyebrow">BUILD BETTER, MEASURE CLEARLY</p><h1>Start your building<br/>assessment.</h1><p>Select a standard version, save supporting evidence, and work through eight categories.</p><form onSubmit={create} className="card"><h2>Create a project</h2><label>Building type<select value={type} onChange={e=>{setType(e.target.value);setVersion([...standards].reverse().find(s=>s.buildingType===e.target.value)?.id||'');}}>{types.map(t=><option key={t} value={t}>{t==='new'?'New Buildings':t==='existing'?'Existing Buildings':t}</option>)}</select></label><label>Rating standard version<select required value={version} onChange={e=>setVersion(e.target.value)}><option value="">Choose a version</option>{available.map(s=><option key={s.id} value={s.id}>{s.label}</option>)}</select></label><label>Project name<input maxLength={160} required value={name} onChange={e=>setName(e.target.value)} placeholder="e.g. Piliyandala office building"/></label><button className="primary" disabled={busy||!version}>{busy?'Creating…':'Create assessment →'}</button></form></section>:<><div className="title-row"><div><p className="eyebrow">{project.standard.label}</p><h1>{project.name}</h1><p>Version locked to this project. Complete each category’s prerequisites before its credits.</p></div><div className="score"><strong>{project.result.total}<span> / {project.result.maxPoints}</span></strong><small>Demonstration points contested</small></div></div><div className="categories">{project.result.categories.map((c:D)=><button key={c.id} onClick={()=>navigate(()=>setCategory(c.id))} className={category===c.id?'category selected':'category'}><span>{c.id}</span><strong>{c.title}</strong><small>{c.implemented?`${c.points} / ${c.maxPoints} points`:'Legacy version — not configured'}</small>{project.categorySavedAt?.[c.id]&&<small>Saved</small>}</button>)}</div><Category key={project.id+category} project={project} categoryId={category} onSave={update} onDirty={v=>{dirtyRef.current=v;}}/></>}
 <footer>Keep both terminals open. Your saved records and evidence are stored by the local backend.</footer></>}</main></div>;
 }
