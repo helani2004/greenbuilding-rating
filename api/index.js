@@ -1,3 +1,6 @@
+import {
+  documentCatalog,
+} from '../shared/document-catalog.mjs';
 import { readFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import {
@@ -251,19 +254,57 @@ function isCompleteStandard(s) {
     validateStandard(s).length === 0
   );
 }
-const documentFor = row => ({
-  ...row.document,
-  id: row.id,
-  revision: row.revision,
-  categories: row.document.categories.map(category => ({
-    ...category,
-    credits: category.credits.map(item => ({
-      ...item,
-      selectablePoints: Number(item.maxPoints) > 1,
-    })),
-  })),
-});
+const documentFor = row => {
+  // These IDs identify the built-in New Construction
+  // versions. Existing Buildings use their own lists.
+  const usesBuiltInCatalogue = [
+    'new-demo-2',
+    'new-v3-beta-demo-1',
+  ].includes(row.id);
 
+  function configureItem(item) {
+    const configured = {
+      ...item,
+      selectablePoints: false,
+    };
+
+    // Preserve any list explicitly configured by admin.
+    // An empty admin list is also preserved.
+    if (
+      usesBuiltInCatalogue &&
+      item.documentOptions === undefined
+    ) {
+      const options = documentCatalog[item.id];
+
+      if (options) {
+        configured.documentOptions =
+          structuredClone(options);
+      }
+    }
+
+    return configured;
+  }
+
+  return {
+    ...row.document,
+    id: row.id,
+    revision: row.revision,
+
+    categories: row.document.categories.map(
+      category => ({
+        ...category,
+
+        prerequisites: (
+          category.prerequisites || []
+        ).map(configureItem),
+
+        credits: (
+          category.credits || []
+        ).map(configureItem),
+      })
+    ),
+  };
+};
 async function standard(id) {
   const rows = await table('rating_standards', {
     id: 'eq.' + id,
