@@ -309,6 +309,12 @@ async function view(row) {
 }
 
 async function updateProject(row, data) {
+  if (row.data.deleting) {
+  fail(
+    'This project is being deleted. Retry deleting it before making changes.',
+    409
+       );
+   }
   const rows = await table(
     'rating_projects',
     {
@@ -798,7 +804,71 @@ export default async function handler(req, res) {
 
       return json(res, 200, available);
     }
+const deleteProjectMatch = path.match(
+  /^\/projects\/([a-f0-9-]+)$/
+);
 
+if (method === 'DELETE' && deleteProjectMatch) {
+  let row = await project(deleteProjectMatch[1], account);
+  const request = await body(req);
+
+  if (request.confirmName !== row.data.name) {
+    fail('Type the exact project name to confirm deletion.');
+  }
+
+  // Lock the project while its files are being removed.
+  if (!row.data.deleting) {
+    row = await updateProject(row, {
+      ...row.data,
+      deleting: true,
+    });
+  }
+
+  const folder = row.owner_id + '/' + row.id + '/';
+
+  const paths = [
+    ...new Set(
+      Object.values(row.data.files || {})
+        .map(file => file.path)
+        .filter(
+          path =>
+            typeof path === 'string' &&
+            path.startsWith(folder)
+        )
+    ),
+  ];
+
+  // Remove uploaded files in batches.
+  for (let index = 0; index < paths.length; index += 100) {
+    await remote('/storage/v1/object/evidence', {
+      method: 'DELETE',
+      body: {
+        prefixes: paths.slice(index, index + 100),
+      },
+    });
+  }
+
+  const deleted = await table(
+    'rating_projects',
+    {
+      id: 'eq.' + row.id,
+      owner_id: 'eq.' + account.id,
+      revision: 'eq.' + row.revision,
+    },
+    {
+      method: 'DELETE',
+      headers: {
+        Prefer: 'return=representation',
+      },
+    }
+  );
+
+  if (!deleted.length) {
+    fail('Project changed. Refresh and try deleting again.', 409);
+  }
+
+  return json(res, 200, { ok: true });
+}
     if (method === 'GET' && path === '/projects') {
       const rows = await table('rating_projects', {
         owner_id: 'eq.' + account.id,
