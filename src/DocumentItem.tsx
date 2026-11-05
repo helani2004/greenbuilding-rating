@@ -408,7 +408,7 @@ export default function DocumentItem({
                       ''
                     }
                     onChange={event =>
-                      setValues(previous => ({
+                      setValues((previous: D) => ({
                         ...previous,
                         [field.id]: event.target.value,
                       }))
@@ -439,7 +439,7 @@ export default function DocumentItem({
                       ''
                     }
                     onChange={event =>
-                      setValues(previous => ({
+                      setValues((previous: D) => ({
                         ...previous,
                         [field.id]: event.target.value,
                       }))
