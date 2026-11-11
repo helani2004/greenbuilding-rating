@@ -96,7 +96,21 @@ export function evaluate(standard,answers={}){
   const credits=category.credits.map(item=>({...item,points:unlocked?rulePoints(item,answers[item.id],true):0}));
   return {...category,prerequisites,credits,unlocked,points:credits.reduce((sum,c)=>sum+c.points,0)};
  });
- return {categories,total:categories.reduce((sum,c)=>sum+c.points,0),maxPoints:standard.categories.reduce((sum,c)=>sum+c.maxPoints,0),finalReportAvailable:true};
+ const finalReportAvailable = categories.some(category =>
+  [...category.prerequisites, ...category.credits].some(item => {
+   const answer = answers[item.id];
+   if (!answer) return false;
+   if (answer.evidenceId) return true;
+   if (Object.values(answer.documents || {}).some(entry =>
+    entry?.availability === 'yes' && entry.evidenceId || entry?.availability === 'no'
+   )) return true;
+   if (!documentOptions(item).length && ['yes', 'no'].includes(answer.values?.answer ?? answer.answer)) return true;
+   return (item.fields || []).some(field =>
+    !['answer', 'claimedPoints'].includes(field.id) && filled(answer.values?.[field.id])
+   );
+  })
+ );
+ return {categories,total:categories.reduce((sum,c)=>sum+c.points,0),maxPoints:standard.categories.reduce((sum,c)=>sum+c.maxPoints,0),finalReportAvailable};
 }
 export function validateStandard(standard){
  const errors=[];const text=(s,max=5000)=>typeof s==='string'&&s.trim().length>0&&s.length<=max;
