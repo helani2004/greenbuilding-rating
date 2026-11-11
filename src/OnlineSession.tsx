@@ -126,24 +126,14 @@ export default function OnlineSession({
 
   return (
     <>
-      <div
-        className="online-account"
-        style={{
-          padding: '8px 20px',
-          textAlign: 'right',
-          background: '#eaf2ec',
-        }}
-      >
-        {user.email}
-        {' · '}
-        <button
-          className="secondary"
-          onClick={() => void signOut()}
-          disabled={busy}
-        >
-          Sign out
-        </button>
-      </div>
+      <header className="online-account">
+        <strong className="workspace-brand">GreenSL® Rating</strong>
+        <div className="account-actions">
+          <span className="account-name" title={user.username}>{user.username || 'Member'}</span>
+          <button type="button" className="secondary"
+            onClick={() => void signOut()} disabled={busy}>Sign out</button>
+        </div>
+      </header>
 
       {children}
     </>
