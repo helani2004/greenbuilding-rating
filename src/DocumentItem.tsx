@@ -287,7 +287,6 @@ export default function DocumentItem({
         </div>
       </div>
 
-      {item.intent && <p className="item-intent">{item.intent}</p>}
       <div className="actions">
         {item.maxPoints !== undefined && <label>Points to claim
           <input type="number" min={0} max={item.maxPoints} step={1}
