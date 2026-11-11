@@ -149,6 +149,15 @@ async function login(email, password) {
   });
 }
 
+function displayUsername(account) {
+  const metadata = account.user_metadata || {};
+  return [metadata.username, metadata.preferred_username, metadata.full_name,
+    account.email?.split('@')[0]]
+    .find(value => typeof value === 'string' && value.trim() && !value.includes('@'))
+    ?.trim().slice(0, 80) || 'Member';
+}
+
+
 async function user(req, res) {
   const saved = cookies(req);
 
@@ -710,7 +719,7 @@ export default async function handler(req, res) {
       return json(res, 200, {
         user: {
           id: session.user.id,
-          email: session.user.email,
+          username: displayUsername(session.user),
         },
       });
     }
@@ -737,7 +746,7 @@ export default async function handler(req, res) {
         return json(res, 200, {
           user: {
             id: account.id,
-            email: account.email,
+            username: displayUsername(account),
           },
         });
       } catch (error) {
