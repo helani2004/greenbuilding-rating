@@ -18,6 +18,9 @@ function evidence(project: Data, item: Data) {
 }
 
 export async function makeReport(project: Data, progress: (message: string) => void) {
+  if (!project.result.finalReportAvailable) {
+    throw Error('Save at least one assessment response before downloading the report.');
+  }
   const {PDFDocument, StandardFonts, rgb} = await import("pdf-lib");
   const pdf = await PDFDocument.create();
   pdf.setTitle('GreenSL Rating Report - ' + project.name);
@@ -79,11 +82,108 @@ export async function makeReport(project: Data, progress: (message: string) => v
   for (const [key, label] of Object.entries(reportFields)) {
     if (key !== 'introduction') row([label, project.reportDetails?.[key] || '—'], [188, 315]);
   }
-  newPage();
-  line('Grand summary', 20, true);
-  row(['Criterion', 'Maximum', 'Contested'], [347, 74, 82], 10, true);
-  for (const category of categories) row([category.title, category.maxPoints, category.points], [347, 74, 82]);
-  row(['Total', project.result.maxPoints, project.result.total], [347, 74, 82], 11, true);
+  const grid = rgb(0.13, 0.13, 0.13);
+  const paper = rgb(244 / 255, 244 / 255, 244 / 255);
+  const darkGreen = rgb(10 / 255, 96 / 255, 29 / 255);
+  const green = rgb(0, 175 / 255, 80 / 255);
+  const white = rgb(1, 1, 1);
+  const marksWidths = [92, 269, 71, 71];
+
+  function tableRow(
+    cells: {text: unknown; width: number; center?: boolean}[],
+    fill = paper, color = grid, strong = false, minimumHeight = 23,
+    checkPage = (height: number) => {if (y - height < 46) newPage();},
+  ) {
+    const font = strong ? bold : regular;
+    const size = 9;
+    const leading = 12;
+    const lines = cells.map(cell => {
+      const wrapped: string[] = [];
+      let current = '';
+      for (const word of clean(cell.text).split(/\s+/)) {
+        const next = current ? current + ' ' + word : word;
+        if (font.widthOfTextAtSize(next, size) <= cell.width - 12) {
+          current = next;
+          continue;
+        }
+        if (current) wrapped.push(current);
+        current = '';
+        for (const character of word) {
+          if (font.widthOfTextAtSize(current + character, size) > cell.width - 12) {
+            wrapped.push(current);
+            current = '';
+          }
+          current += character;
+        }
+      }
+      wrapped.push(current);
+      return wrapped;
+    });
+    const height = Math.max(minimumHeight, ...lines.map(cell => cell.length * leading + 8));
+    checkPage(height);
+    let x = 46;
+    for (const [index, cell] of cells.entries()) {
+      page.drawRectangle({x, y: y - height, width: cell.width, height, color: fill,
+        borderColor: grid, borderWidth: 0.6});
+      const top = y - (height - (lines[index].length - 1) * leading) / 2 - 3;
+      for (const [lineIndex, text] of lines[index].entries()) {
+        if (!text) continue;
+        const inset = cell.center ? (cell.width - font.widthOfTextAtSize(text, size)) / 2 : 6;
+        page.drawText(text, {x: x + inset, y: top - lineIndex * leading, size, font, color});
+      }
+      x += cell.width;
+    }
+    y -= height;
+  }
+  const [idWidth, titleWidth, totalWidth, contestedWidth] = marksWidths;
+  const criterionWidth = idWidth + titleWidth;
+  function marksHeader() {
+    tableRow([{text: 'Summary of the Marks', width: 503, center: true}], paper, darkGreen, true, 28);
+    tableRow([
+      {text: 'Criteria', width: criterionWidth, center: true},
+      {text: 'Total Points', width: totalWidth, center: true},
+      {text: 'Contested Points', width: contestedWidth, center: true},
+    ], darkGreen, white, true, 29);
+  }
+  function marksPage() {
+    newPage();
+    marksHeader();
+  }
+  function checkMarksPage(height: number) {
+    if (y - height < 46) marksPage();
+  }
+
+  marksPage();
+  for (const [categoryIndex, category] of categories.entries()) {
+    if (y < 130) marksPage();
+    tableRow([
+      {text: `${categoryIndex + 1}.0 ${category.title}`, width: criterionWidth},
+      {text: category.maxPoints, width: totalWidth, center: true},
+      {text: category.points, width: contestedWidth, center: true},
+    ], green, white, true, 25, checkMarksPage);
+    for (const [index, item] of category.prerequisites.entries()) {
+      tableRow([
+        {text: `Prerequisite ${index + 1}`, width: idWidth},
+        {text: item.title, width: titleWidth},
+        {text: item.achieved ? 'Achieved' : 'Not Achieved', width: totalWidth + contestedWidth, center: true},
+      ], paper, grid, false, 23, checkMarksPage);
+    }
+    for (const item of category.credits) {
+      const numberedTitle = String(item.title).match(/^(\d+(?:\.\d+)+)\s+(.+)$/);
+      tableRow([
+        {text: `Credit ${numberedTitle?.[1] || item.id}`, width: idWidth},
+        {text: numberedTitle?.[2] || item.title, width: titleWidth},
+        {text: item.maxPoints, width: totalWidth, center: true},
+        {text: item.points, width: contestedWidth, center: true},
+      ], paper, grid, false, 23, checkMarksPage);
+    }
+  }
+  tableRow([
+    {text: 'Total', width: criterionWidth},
+    {text: project.result.maxPoints, width: totalWidth, center: true},
+    {text: project.result.total, width: contestedWidth, center: true},
+  ], darkGreen, white, true, 25, checkMarksPage);
+
   newPage();
   line('Assessment summary and saved documents', 18, true);
   const annex: Data[] = [];
@@ -104,14 +204,26 @@ export async function makeReport(project: Data, progress: (message: string) => v
         const documents = evidence(project, item);
         if (!documents.length) continue;
         const widths = [238, 52, 164, 49];
-        row(['Document / description', 'Available', 'File', 'Annex'], widths, 9, true);
+        const headers = ['Document / description', 'Available', 'File', 'Annex'];
+        const documentCells = (values: unknown[]) => values.map((text, index) =>
+          ({text, width: widths[index], center: index === 1 || index === 3}));
+        const documentHeader = () => tableRow(documentCells(headers), darkGreen, white, true);
+        if (y < 120) newPage();
+        documentHeader();
         for (const entry of documents) {
           const file = project.files?.[entry.evidenceId];
           if (entry.evidenceId && !file) throw Error('Evidence metadata is missing for ' + entry.label);
           if (entry.evidenceId && file?.detached) throw Error("Evidence was deleted during report generation. Refresh and retry.");
           const number = file && !file.detached ? annex.length + 1 : '';
           if (number) annex.push({number, category: category.title, title, item, entry, file});
-          row([entry.label, entry.availability === 'yes' ? 'Yes' : entry.availability === 'no' ? 'No' : '', file?.name, number], widths, 9);
+          const availability = entry.availability === 'yes' ? 'Yes' : entry.availability === 'no' ? 'No' : '';
+          tableRow(documentCells([entry.label, availability, file?.name, number]), paper, grid, false, 23, height => {
+            if (y - height < 46) {
+              newPage();
+              line(`${category.title} / ${item.title}`, 10, true);
+              documentHeader();
+            }
+          });
         }
       }
     }
