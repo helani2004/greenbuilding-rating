@@ -46,7 +46,12 @@ export function rulePoints(item, answer, credit) {
     ],
   };
 
-  const maximum = credit ? item.maxPoints : 1;
+  const claim = Number(values.claimedPoints);
+  const maximum = credit
+    ? (filled(values.claimedPoints) && Number.isInteger(claim)
+        ? Math.max(0, Math.min(item.maxPoints, claim))
+        : item.maxPoints)
+    : 1;
 
   if (rule.type === 'thresholds') {
     const value = values[rule.field];
@@ -91,7 +96,7 @@ export function evaluate(standard,answers={}){
   const credits=category.credits.map(item=>({...item,points:unlocked?rulePoints(item,answers[item.id],true):0}));
   return {...category,prerequisites,credits,unlocked,points:credits.reduce((sum,c)=>sum+c.points,0)};
  });
- return {categories,total:categories.reduce((sum,c)=>sum+c.points,0),maxPoints:standard.categories.reduce((sum,c)=>sum+c.maxPoints,0),finalReportAvailable:false};
+ return {categories,total:categories.reduce((sum,c)=>sum+c.points,0),maxPoints:standard.categories.reduce((sum,c)=>sum+c.maxPoints,0),finalReportAvailable:true};
 }
 export function validateStandard(standard){
  const errors=[];const text=(s,max=5000)=>typeof s==='string'&&s.trim().length>0&&s.length<=max;
@@ -117,12 +122,12 @@ export function validateStandard(standard){
   (
     !cat.credits.includes(item) ||
     !Number.isInteger(item.maxPoints) ||
-    item.maxPoints < 2 ||
+    item.maxPoints < 1 ||
     item.maxPoints > 100
   )
 ) {
   errors.push(
-    `${prefix}: selectable points require a whole-number maximum from 2 to 100.`
+    `${prefix}: selectable points require a whole-number maximum from 1 to 100.`
   );
 }
 

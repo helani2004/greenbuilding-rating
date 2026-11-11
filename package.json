@@ -11,13 +11,14 @@
     "start": "node server/start.mjs"
   },
   "dependencies": {
+    "pdf-lib": "^1.17.1",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
-    "vite": "7.2.2",
-    "typescript": "5.9.3",
     "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2"
+    "@types/react-dom": "19.2.2",
+    "typescript": "5.9.3",
+    "vite": "7.2.2"
   }
 }

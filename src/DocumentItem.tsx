@@ -1,3 +1,5 @@
+import {AdditionalEvidence} from './AdditionalEvidence';
+import {uploadPdf} from './uploadPdf';
 import {useEffect, useState} from 'react';
 import {api} from './api';
 import {RefreshIcon, TrashIcon} from './Icons';
@@ -37,12 +39,24 @@ export default function DocumentItem({
   const [message, setMessage] = useState('');
   const [expanded, setExpanded] = useState(false);
   const [inputKey, setInputKey] = useState(0);
+  const [claim, setClaim] = useState<string | null>(null);
+  const claimValue = answer.values?.claimedPoints ?? item.points ?? 0;
 
-  const dirty =
+  async function saveClaim() {
+    if (claim === null) return;
+    if (!claim.trim()) throw Error('Enter the points you want to claim.');
+    const updated = await api(route('claim'), {action: 'claim', points: Number(claim)});
+    onSave(updated);
+    setClaim(null);
+  }
+
+  const evidenceDirty =
     Boolean(selected) ||
     Boolean(availability) ||
     Boolean(file) ||
     Object.keys(values).length > 0;
+
+  const dirty = evidenceDirty || claim !== null;
 
   const rows: D[] = Object.entries(entries).map(
     ([id, entry]) => ({
@@ -71,7 +85,10 @@ export default function DocumentItem({
 
   // Allows "Save category" to save pending document panels too.
   useEffect(() => {
-    register(item.id, dirty ? save : null);
+    register(item.id, dirty ? async () => {
+      if (evidenceDirty) await save();
+      if (claim !== null) await saveClaim();
+    } : null);
 
     return () => register(item.id, null);
   });
@@ -119,47 +136,11 @@ export default function DocumentItem({
         );
       }
 
-      let upload;
-
-      if (file) {
-        if (
-          file.size > 2 * 1024 * 1024 ||
-          !file.name.toLowerCase().endsWith('.pdf')
-        ) {
-          throw Error('Choose a PDF up to 2 MB.');
-        }
-
-        const base64 = await new Promise<string>(
-          (resolve, reject) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-              resolve(
-                String(reader.result).split(',')[1]
-              );
-            };
-
-            reader.onerror = () => {
-              reject(Error('Cannot read the PDF.'));
-            };
-
-            reader.readAsDataURL(file);
-          }
-        );
-
-        upload = {
-          name: file.name,
-          base64,
-        };
-      }
-
+      const upload = file ? await uploadPdf(route(selected), file) : {};
       const updated = await api(route(selected), {
         availability,
-        values: {
-          ...(answer.values || {}),
-          ...values,
-        },
-        ...(upload ? {file: upload} : {}),
+        values: {...(answer.values || {}), ...values},
+        ...upload,
       });
 
       onSave(updated);
@@ -198,6 +179,7 @@ export default function DocumentItem({
 
       onSave(updated);
       reset();
+      setClaim(null);
       setMessage('Saved documents refreshed.');
     } catch (error) {
       setError((error as Error).message);
@@ -286,7 +268,7 @@ export default function DocumentItem({
         <div className="document-tools">
           <span className="status">
             {item.maxPoints !== undefined
-              ? `Calculated points: ${item.points} / ${item.maxPoints}`
+              ? `Points contested: ${item.points} / ${item.maxPoints}`
               : item.achieved
                 ? 'Prerequisite achieved'
                 : 'Prerequisite not achieved'}
@@ -305,6 +287,24 @@ export default function DocumentItem({
         </div>
       </div>
 
+      {item.intent && <p className="item-intent">{item.intent}</p>}
+      <div className="actions">
+        {item.maxPoints !== undefined && <label>Points to claim
+          <input type="number" min={0} max={item.maxPoints} step={1}
+            disabled={locked || busy || project.deleting}
+            value={claim ?? claimValue} onChange={event => setClaim(event.target.value)}/>
+        </label>}
+        {claim !== null && <button type="button" className="secondary"
+          disabled={locked || busy || project.deleting}
+          onClick={async () => {
+            setBusy(true); setError('');
+            try {await saveClaim();}
+            catch (error) {setError((error as Error).message);}
+            finally {setBusy(false);}
+          }}>Save points</button>}
+        <AdditionalEvidence route={route('').slice(0, -1)} disabled={locked || busy || project.deleting}
+          onSave={updated => {onSave(updated); setExpanded(true);}}/>
+      </div>
       <fieldset
         className="assessment-fields"
         disabled={locked || busy || project.deleting}

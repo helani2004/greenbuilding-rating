@@ -1,3 +1,4 @@
+import { objectives } from '../shared/objectives.mjs';
 import {
   documentOptions,
   evidenceComplete,
@@ -270,7 +271,8 @@ const documentFor = row => {
   function configureItem(item) {
     const configured = {
       ...item,
-      selectablePoints: false,
+      selectablePoints: typeof item.maxPoints === 'number',
+      intent: item.intent ?? (usesBuiltInCatalogue ? objectives[item.id] : undefined),
     };
 
     // Preserve any list explicitly configured by admin.
@@ -483,6 +485,43 @@ async function cleanup(paths) {
   }).catch(() => {});
 }
 
+async function stagedPdf(p, item, documentId, uploadId, name) {
+    const staged = validUuid(uploadId) ? p.files[uploadId] : null;
+    if (!staged?.pending || staged.itemId !== item.id || staged.documentId !== documentId) {
+      fail('Upload reservation is invalid. Upload the PDF again.');
+    }
+    if (typeof name !== 'string' || !/\.pdf$/i.test(name)) {
+      fail('Choose a PDF.');
+    }
+    const {url, key} = config();
+    const object = await fetch(url + '/storage/v1/object/authenticated/evidence/' + staged.path, {
+      headers: {apikey: key, Authorization: 'Bearer ' + key, Range: 'bytes=0-4'},
+    });
+    const length = object.status === 206
+      ? object.headers.get('Content-Range')?.split('/').pop()
+      : object.headers.get('Content-Length');
+    const size = Number(length);
+    const reader = object.body?.getReader();
+    const signature = new Uint8Array(5);
+    let read = 0;
+    try {
+      while (reader && read < signature.length) {
+        const chunk = await reader.read();
+        if (chunk.done) break;
+        const prefix = chunk.value.subarray(0, signature.length - read);
+        signature.set(prefix, read);
+        read += prefix.length;
+      }
+    } finally {
+      await reader?.cancel();
+    }
+    if (!object.ok || !Number.isInteger(size) || size < 5 || size > 25 * 1024 * 1024 ||
+        Buffer.from(signature).toString() !== '%PDF-') {
+      fail('Upload a valid PDF up to 25 MB.');
+    }
+    return {path: staged.path, name: name.slice(0, 180)};
+}
+
 async function saveAnswers(
   row,
   s,
@@ -550,7 +589,11 @@ if (documentOptions(item).length) {
 
     let evidenceId = previous?.evidenceId || null;
 
-    if (entry.file) {
+    if (entry.uploadId) {
+      const verified = await stagedPdf(p, item, 'legacy', entry.uploadId, entry.fileName);
+      evidenceId = entry.uploadId;
+      p.files[evidenceId] = verified;
+    } else if (entry.file) {
       const file = entry.file;
 
       if (
@@ -585,6 +628,7 @@ if (documentOptions(item).length) {
     }
 
     p.answers[item.id] = {
+      ...previous,
       values,
       answer: values.answer,
       evidenceId,
@@ -823,15 +867,18 @@ if (
     });
   }
 
-  const option = documentOptions(item).find(
-    option => option.id === documentId
-  );
+  const request = await body(req);
+  const additional = /^extra-[a-f0-9-]{36}$/.test(documentId);
+  const option = additional
+    ? {label: typeof request.description === 'string' ? request.description.trim() : ''}
+    : documentId === 'legacy' && !documentOptions(item).length && request.action === 'prepare'
+      ? {label: 'Supporting document'}
+      : documentOptions(item).find(option => option.id === documentId);
 
-  if (!option) {
-    fail('This document option is not configured.');
-  }
 
-  if (answer.documents[documentId]) {
+
+
+  if (documentId !== 'claim' && answer.documents[documentId]) {
     fail(
       'This option is already saved. Delete its table row before using it again.',
       409
@@ -853,7 +900,38 @@ if (
     );
   }
 
-  const request = await body(req);
+  if (documentId === 'claim' && request.action === 'claim' && isCredit) {
+    const points = request.points;
+    if (typeof points !== 'number' || !Number.isInteger(points) || points < 0 || points > item.maxPoints) {
+      fail('Enter a whole number between 0 and the credit maximum.');
+    }
+    answer.values = {...answer.values, claimedPoints: points};
+    p.answers[item.id] = answer;
+    return json(res, 200, await view(await updateProject(row, p)));
+  }
+
+  if (!option || !option.label || option.label.length > 500) {
+    fail(additional ? 'Enter a description of up to 500 characters.' : 'This document option is not configured.');
+  }
+
+  if (request.action === 'prepare') {
+    const id = randomUUID();
+    const storagePath = row.owner_id + '/' + row.id + '/' + id;
+    const signed = await remote('/storage/v1/object/upload/sign/evidence/' + storagePath, {
+      method: 'POST',
+      body: {},
+      headers: {'x-upsert': 'false'},
+    });
+    const token = signed?.token ?? (signed?.url && new URL(signed.url, config().url).searchParams.get('token'));
+    if (!token) fail('Storage did not return an upload token.', 502);
+    p.files[id] = {path: storagePath, pending: true, itemId: item.id, documentId};
+    await updateProject(row, p);
+    return json(res, 200, {
+      id,
+      url: config().url + '/storage/v1/object/upload/sign/evidence/' + storagePath +
+        '?token=' + encodeURIComponent(token),
+    });
+  }
 
   if (!['yes', 'no'].includes(request.availability)) {
     fail('Choose Yes or No.');
@@ -864,17 +942,22 @@ if (
     ...(request.values || {}),
   };
 
-  delete values.claimedPoints;
-  values.answer = 'no';
-
-  validateValues(item, values);
+  if (!additional) {
+    values.answer = 'no';
+    validateValues(item, values);
+  }
 
   let bytes = null;
   let fileId = null;
   let filePath = null;
   let fileName = null;
 
-  if (request.file) {
+  if (request.uploadId) {
+    const verified = await stagedPdf(p, item, documentId, request.uploadId, request.fileName);
+    fileId = request.uploadId;
+    filePath = verified.path;
+    fileName = verified.name;
+  } else if (request.file) {
     const file = request.file;
 
     if (
@@ -901,7 +984,7 @@ if (
     fileName = file.name.slice(0, 180);
   }
 
-  if (request.availability === 'yes' && !bytes) {
+  if (request.availability === 'yes' && !fileId) {
     fail('Upload the PDF before saving Yes.');
   }
 
@@ -910,18 +993,18 @@ if (
   answer.documents[documentId] = {
     documentId,
     label: option.label,
+    ...(additional ? {additional: true} : {}),
     availability: request.availability,
     evidenceId: fileId,
     evidenceName: fileName,
     savedAt: now,
   };
 
-  answer.values = values;
-  answer.values.answer = evidenceComplete(item, answer)
-    ? 'yes'
-    : 'no';
-
-  answer.answer = answer.values.answer;
+  if (!additional) {
+    answer.values = values;
+    answer.values.answer = evidenceComplete(item, answer) ? 'yes' : 'no';
+    answer.answer = answer.values.answer;
+  }
   answer.savedAt = now;
 
   p.answers[item.id] = answer;
@@ -939,7 +1022,7 @@ if (
     const saved = await updateProject(row, p);
     return json(res, 200, await view(saved));
   } catch (error) {
-    if (filePath) await cleanup([filePath]);
+    if (bytes && filePath) await cleanup([filePath]);
     throw error;
   }
 }
@@ -1015,8 +1098,8 @@ if (
       if (match) {
         const old = await standard(match[1]);
 
-        if (old.status !== 'draft') {
-          fail('Clone a published version before editing.');
+        if (old.status !== 'draft' && (method === 'DELETE' || match[2])) {
+          fail('Only drafts can be deleted or published.');
         }
 
         if (method === 'DELETE') {
@@ -1055,9 +1138,19 @@ if (
             s = {
               ...b.standard,
               id: old.id,
-              status: 'draft',
+              status: old.status,
               demo: true,
             };
+          }
+
+          if (old.status === 'published') {
+            const previous = old.categories.flatMap(c => [...c.prerequisites, ...c.credits]);
+            const next = s.categories.flatMap(c => [...c.prerequisites, ...c.credits]);
+            if (previous.some(item => !next.some(candidate => candidate.id === item.id))) {
+              fail('Keep existing item IDs on published versions so saved evidence remains linked.');
+            }
+            const errors = validateStandard(s);
+            if (errors.length) fail(errors.join('\n'));
           }
 
           s.revision = old.revision + 1;
@@ -1227,7 +1320,7 @@ if (method === 'DELETE' && deleteProjectMatch) {
       if (method === 'GET' && match[4]) {
         const file = row.data.files?.[match[4]];
 
-        if (!file || file.detached) {
+        if (!file || file.detached || file.pending) {
                 fail('Document not found.', 404);
         }
         const signed = await remote(
@@ -1257,6 +1350,8 @@ if (method === 'DELETE' && deleteProjectMatch) {
 
         if (match[2] === 'report-details') {
           const allowed = [
+            'introduction', 'client', 'projectManager', 'quantitySurveyor',
+            'developmentType', 'siteArea', 'footprint', 'developedArea', 'ratingClaimed',
             'budget',
             'architect',
             'structuralEngineer',
