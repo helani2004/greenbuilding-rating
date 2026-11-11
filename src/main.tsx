@@ -1,3 +1,4 @@
+import OnlineSession from './OnlineSession';
 import ReportPanel from './ReportPanel';
 import {uploadPdf} from './uploadPdf';
 import {AdditionalEvidence} from './AdditionalEvidence';
@@ -160,6 +161,7 @@ return <div className="shell"><aside><div className="view-navigation" aria-label
 </div>}{page==='admin'?<Admin onDirty={v=>{dirtyRef.current=v;}}/>:<><div className="notice"><strong>Demonstration scoring</strong> · Document guidance and forms are editable. These checks do not inspect uploaded documents or represent verified compliance with the full rating standard.</div>{error&&<div role="alert" className="error">{error}<button className="secondary" onClick={()=>void load()}>Retry connection</button></div>}
 {!project?<section className="welcome"><p className="eyebrow">BUILD BETTER, MEASURE CLEARLY</p><h1>Start your building<br/>assessment.</h1><p>Select a standard version, save supporting evidence, and work through eight categories.</p><form onSubmit={create} className="card"><h2>Create a project</h2><label>Building type<select value={type} onChange={e=>{setType(e.target.value);setVersion([...standards].reverse().find(s=>s.buildingType===e.target.value)?.id||'');}}>{types.map(t=><option key={t} value={t}>{t==='new'?'New Buildings':t==='existing'?'Existing Buildings':t}</option>)}</select></label><label>Rating standard version<select required value={version} onChange={e=>setVersion(e.target.value)}><option value="">Choose a version</option>{available.map(s=><option key={s.id} value={s.id}>{s.label}</option>)}</select></label><label>Project name<input maxLength={160} required value={name} onChange={e=>setName(e.target.value)} placeholder="e.g. Piliyandala office building"/></label><button className="primary" disabled={busy||!version}>{busy?'Creating…':'Create assessment →'}</button></form></section>:<><div className="title-row"><div><p className="eyebrow">{project.standard.label}</p><h1>{project.name}</h1><p>Version locked to this project. Complete each category’s prerequisites before its credits.</p></div><div className="score"><strong>{project.result.total}<span> / {project.result.maxPoints}</span></strong><small>Points contested</small></div></div> {category === 'report'
   ? <ReportPanel key={project.id} project={project} onSave={update}/>
+  : <Category key={project.id+category} project={project} categoryId={category} onSave={update}
       onNext={id=>{dirtyRef.current=false;setCategory(id);}}
       onDirty={v=>{dirtyRef.current=v;}}/>}</>}
 </>}</main></div>;
